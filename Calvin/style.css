@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown {
+    background: white;
+    width: 8rem;
+    margin: 4rem;
+    border: 1px solid black;
+    border-radius: 0.25rem;
+}
+
+.dropdown-button {
+    width: inherit;
+    background: none;
+    padding: 0.25rem;
+    border: none;
+    text-align: center;
+
+}
+  
+.dropdown-list {
+    width: inherit;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    z-index: 1;
+}
+
+.dropdown-value {
+    border: 0;
+    background: none;
+    padding: 0.25rem;
+}

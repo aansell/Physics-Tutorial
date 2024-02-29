@@ -34,8 +34,8 @@
   align-items: center;
   flex-direction: column;
   background-color: #ddd;
-  border-radius: 0.5rem;
   overflow: hidden;
+  border-radius: 0.5rem;
   margin-top: 0.25rem;
 }
 

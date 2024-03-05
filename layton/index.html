@@ -1,8 +1,23 @@
 <!DOCTYPE html>
 <html>
-    <head>
-   <link rel="stylesheet" href=style.css>
+<head>
+    <link rel="stylesheet" href="style.css">
+<script src="script.js"></script>
 </head>
-  
-    <a id="refresh"; href = "index.html">refresh</a>
-</html>
+<body>
+    <h1 id="daheader">Physics program Drag n Drop</h1>
+    <a href="index.html" id="refreshLink">
+        <img id="refresh" src="refresh.jpeg" alt= "Refresh" draggable="true"></a>
+    
+    <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div> 
+    
+    <div class="dropdown">
+        <button class="dropbtn">Dropdown</button>
+            <div class="dropdown-content">
+                <div id="drag1" draggable="true" ondragstart="drag(event)">unknown 1</div>
+                <div id="drag2" draggable="true" ondragstart="drag(event)">unknown 2</div>
+                <div id="drag3" draggable="true" ondragstart="drag(event)">unknown 3</div>
+            </div>
+         </div>
+      </body>
+    </html>

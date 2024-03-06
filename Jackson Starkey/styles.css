@@ -1,0 +1,37 @@
+body {
+  font-family: 'Material Symbols Outlined', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+#side-panel {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 300px;
+  height: 100%;
+  background: #f0f0f0;
+  transition: left 0.3s ease;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+#side-panel.open {
+  left: 0;
+}
+
+#toggle-btn {
+  position: fixed;
+  top: 50%;
+  right: 97%; /* Adjust as needed */
+  z-index: 1001;
+  cursor: pointer;
+}
+
+.material-symbols-outlined {
+  font-size: 24px;
+}
+
+.panel-content {
+  padding: 20px;
+}

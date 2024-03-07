@@ -8,6 +8,8 @@ function allowDrop(ev) {
   
   function drop(ev) {
     ev.preventDefault();
+    if(ev.target.id == "dropbox1" || ev.target.id == "dropbox2") {
     var data = ev.dataTransfer.getData("text");
     ev.target.appendChild(document.getElementById(data));
   }  
+}

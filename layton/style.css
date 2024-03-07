@@ -3,42 +3,66 @@
   height: 25px;
   }
 
-#div1 {
-  width: 50%;
+#dropbox1 {
+  width: 25%;
   height: 300px;
   border: 3px dashed green;
   background-color: #40ec4059;
-  margin-top: 20px;
+  margin: 20px;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  padding: 50px;
   }
+#dropbox2 {
+  width: 25%;
+  height: 300px;
+  border: 3px dashed green;
+  background-color: #40ec4059;
+  margin: 20px;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 600px;
+  padding: 50px;
+}
 
 #drag1, #drag2, #drag3{
   width: 100%;
   text-align: center;
-  border: 3px solid orange;
+  border: 1px solid orange;
   background-color: #ea976a68;
   display: block;
   text-decoration: none;
   padding: auto;
   }
-
+.container{
+  position: relative;
+  vertical-align: top;
+  width: 100%;
+  height: 400px;
+}
   .dropbtn {
-    background-color: #4CAF50;
-    color: white;
+    background-color: #40ec4059;
+    color: black;
     padding: 16px;
     font-size: 16px;
-    border: none;
+    border: 1px solid green;
   }
   
   /* Dropdown container */
   .dropdown {
-    position: relative;
+    position: absolute;
+    margin: 20px;
+    top: 0;
+    left: 1200px;
     display: inline-block;
   }
   
   /* Dropdown content (hidden by default) */
   .dropdown-content {
     display: none;
-    position: absolute;
+    position: relative;
     background-color: #f9f9f9;
     min-width: 160px;
     z-index: 1;
@@ -52,4 +76,27 @@
   /* Change background color of items on hover */
   .item:hover {
     background-color: #ddd;
+  }
+
+  #text-container{
+    position: absolute;
+    top: 0;
+    width: 1000px;
+    height: 100px;
+    margin-left: 50px;
+    margin-top: 70px; 
+    padding: 50px;
+  }
+
+  #knowns{
+    font: times;
+    size-adjust: 24;
+    display: inline-block;
+    margin-right: 55%;
+  }
+  
+  #unknowns{
+    font: times;
+    size-adjust: 24;
+    display: inline-block;
   }

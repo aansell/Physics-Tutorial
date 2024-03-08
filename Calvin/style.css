@@ -26,12 +26,6 @@
   padding: 0rem 0.5rem 0rem 0.5rem;
 }
 
-.dropdown-button:hover,
-.dropdown-value:hover {
-  background-color: var(--dropdown-selected-color);
-  cursor: pointer;
-}
-
 .dropdown-list {
   position: absolute;
   display: none;
@@ -44,9 +38,15 @@
   margin-top: 0.25rem;
 }
 
-.dropdown-value {
+.dropdown-option {
   width: inherit;
   height: 2rem;
   border: none;
   background: none;
+}
+
+.dropdown-button:hover,
+.dropdown-option:hover {
+  background-color: var(--dropdown-selected-color);
+  cursor: pointer;
 }

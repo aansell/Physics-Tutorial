@@ -1,15 +1,31 @@
-function convertDistance(value, unit, wantUnit) {
-  return value * unit.toBase * (1 / wantUnit.toBase);
+function convert(value, valueUnit, wantUnit) {
+  return (value / wantUnit) * valueUnit;
 }
 
 const unit = {
-  mi: { name: "mi", toBase: 0.00062137119 },
-  km: { name: "km", toBase: 0.001 },
-  m: { name: "m", toBase: 1 },
-  ft: { name: "ft", toBase: 3.281 },
-  in: { name: "in", toBase: 39.37 },
-  cm: { name: "cm", toBase: 100 },
-  mm: { name: "mm", toBase: 1000 },
+  // time
+  hr: 3600,
+  min: 60,
+  sec: 1,
+
+  // distance
+  mi: 1609.344,
+  km: 1000,
+  m: 1,
+  ft: 0.3048,
+  in: 0.0254,
+  cm: 0.01,
+  mm: 0.001,
+
+  // mass
+  kg: 1000,
+  lb: 453.59237,
+  oz: 28.349523125,
+  g: 1,
+  mg: 0.001,
 };
 
-console.log(convertDistance(1, unit.ft, unit.mi));
+console.log(convert(1, unit.mi, unit.ft));
+console.log(convert(60, unit.sec, unit.hr));
+console.log(convert(1, unit.g, unit.kg));
+console.log(convert(1, unit.lb, unit.oz));

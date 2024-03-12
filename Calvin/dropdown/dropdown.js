@@ -18,9 +18,9 @@ function closeAllDropdowns() {
   dropdowns.forEach(closeDropdown);
 }
 
-// closes all dropdowns when the mouse is clicked on anything that is not a dropdown
+// closes all dropdowns when the mouse is clicked on anything that is not a dropdown-button
 document.addEventListener("click", (event) => {
-  if (!event.target.closest(".dropdown")) {
+  if (!event.target.matches(".dropdown-button")) {
     closeAllDropdowns();
   }
 });
@@ -40,11 +40,10 @@ dropdowns.forEach((dropdown) => {
     }
   });
 
-  // changes the text of the dropdown when one of the values is clicked and closes the dropdown
+  // changes the text of the dropdown when one of the values is clicked
   list.querySelectorAll(".dropdown-option").forEach((value) => {
     value.addEventListener("click", () => {
       buttonText.textContent = value.textContent;
-      closeDropdown(dropdown);
     });
   });
 });

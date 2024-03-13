@@ -27,7 +27,7 @@
   padding: 50px;
 }
 
-#drag1, #drag2, #drag3{
+.variableDiv{
   width: 100%;
   text-align: center;
   border: 1px solid orange;

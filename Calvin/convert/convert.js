@@ -26,6 +26,7 @@ const unit = {
 };
 
 console.log(convert(1, unit.mi, unit.ft));
-console.log(convert(60, unit.sec, unit.hr));
+console.log(convert(1, unit.km, unit.m));
+console.log(convert(180, unit.sec, unit.hr));
 console.log(convert(1, unit.g, unit.kg));
 console.log(convert(1, unit.lb, unit.oz));

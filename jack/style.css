@@ -1,0 +1,12 @@
+.selector-button-div {
+    position: relative;
+    display: inline-block;
+    width: 8rem;
+}
+
+.selector-button {
+    display: flex;
+    border-radius: 0.5rem;
+    align-items: center;
+    padding: 0rem 0.5rem 0rem 0.5rem;
+}

@@ -1,0 +1,38 @@
+body {
+  font-family: 'Material Symbols Outlined', sans-serif; /* Setting font family for the document */
+  margin: 0;
+  padding: 0;
+}
+
+#side-panel {
+  position: fixed;
+  top: 0;
+  left: -100%; /* Start off-screen */
+  width: 300px; /* Width of the side panel */
+  height: 100%; /* Full height of the viewport */
+  background: #f0f0f0; /* Background color of the side panel */
+  transition: left 0.3s ease; /* Transition effect for opening and closing the panel */
+  z-index: 1000; /* Z-index to control the stacking order */
+  overflow-y: auto; /* Add scrollbar when content exceeds height */
+}
+
+#side-panel.open {
+  left: 0; /* Position the panel to the left when open */
+}
+
+#toggle-btn {
+  position: fixed; /* Fixed position */
+  top: 50%; /* Center vertically */
+  right: 97%; /* Align to the right edge */
+  transform: translateY(-50%); /* Center vertically */
+  z-index: 1001; /* Higher z-index to appear on top of the panel */
+  cursor: pointer; /* Change cursor to pointer */
+}
+
+.material-symbols-outlined {
+  font-size: 24px; /* Font size for the toggle button icon */
+}
+
+.panel-content {
+  padding: 20px; /* Padding for the content inside the panel */
+}

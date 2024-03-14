@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cross Out Text on Hover</title>
+  <style>
+    #text-to-cross-out {
+      font-size: 20px;
+      cursor: pointer; /* Change cursor to pointer on hover */
+      transition: opacity 0.3s ease; /* Add a transition effect */
+    }
+
+    #text-to-cross-out:hover {
+      opacity: 0.7; /* Reduce opacity when hovered over */
+      text-decoration: line-through;
+      text-decoration-color: red; /* Change text color to red */
+    }
+
+    .crossed-out {
+      text-decoration: line-through;
+      text-decoration-color: red; /* Change text color to red */
+    }
+  </style>
+</head>
+<body>
+  <div id="text-container">
+    <p id="text-to-cross-out">meters</p>
+  </div>
+
+  <script>
+    var textToCrossOut = document.getElementById('text-to-cross-out');
+
+    textToCrossOut.addEventListener('mouseenter', function() {
+      this.classList.add('crossed-out');
+    });
+
+    textToCrossOut.addEventListener('mouseleave', function() {
+      this.classList.remove('crossed-out');
+    });
+
+    textToCrossOut.addEventListener('click', function() {
+      this.style.display = 'none'; // Hide the text when clicked
+    });
+  </script>
+</body>
+</html>

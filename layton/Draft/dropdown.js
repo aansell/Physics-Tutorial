@@ -47,9 +47,3 @@ dropdowns.forEach((dropdown) => {
     });
   });
 });
-
-value.addEventListener("click", () => {
-if(buttonText.textContent == "v"){
-    var correctAnswer = true;
-  }
-});

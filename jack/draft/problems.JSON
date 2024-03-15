@@ -1,0 +1,14 @@
+[
+    {
+        "variables": [
+            {"name": "F", "value": 20, "units": "N"},
+            {"name": "M", "value": 5, "units": "Kg"},
+            {"name": "A", "value": null, "units": "m/s^2"}
+           ]
+
+       
+    }
+
+
+
+]

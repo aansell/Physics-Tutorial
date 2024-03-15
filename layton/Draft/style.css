@@ -9,7 +9,7 @@ body {
   height: 25px;
   }
 
-.dropbox {
+#dropbox1 {
   width: 25%;
   height: 300px;
   border: 3px dashed green;

@@ -14,6 +14,17 @@ class variableDiv {
   }
 }
 
+class dropBoxDiv {
+  constructor(parent) {
+    this.variable = document.createElement("div");
+    this.variable.id = "text-container";
+    this.variable.className = "dropbox";
+    parent.appendChild(this.variable);
+    this.variable.addEventListener("ondragover", allowDrop);
+    this.variable.addEventListener("ondrop", drop);
+    }
+  }
+
 
 //Functions for a dropbox prefab (box which stores draggable elements)
 function allowDrop(ev) {
@@ -72,16 +83,7 @@ new dropBoxDiv(parentDiv);
 new dropBoxDiv(parentDiv);
 }
 
-class dropBoxDiv {
-  constructor(parent) {
-    this.variable = document.createElement("div");
-    this.variable.id = "text-container";
-    this.variable.className = "dropbox";
-    parent.appendChild(this.variable);
-    this.variable.addEventListener("ondragover", allowDrop);
-    this.variable.addEventListener("ondrop", drop);
-    }
-  }
+
 
 /*
 // Knowns/unknowns HTML code translated to JS

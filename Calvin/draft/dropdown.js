@@ -1,5 +1,63 @@
-// finds all the dropdowns when the page loads
-const dropdowns = document.querySelectorAll(".dropdown_calvin");
+/*
+  <div class="dropdown_calvin">
+  <button class="dropdown-button">
+      <p class="dropdown-button-text">Variable</p>
+      <p class="dropdown-arrow">▼</p>
+  </button>
+  <div class="dropdown-list">
+      <button class="dropdown-option">Δd</button>
+      <button class="dropdown-option">Δt</button>
+      <button class="dropdown-option">v</button>
+  </div>
+  </div>
+*/
+
+class dropdown {
+  constructor(parent, text, values) {
+    this.dropdown = document.createElement("div");
+    this.dropdown.className = "dropdown_calvin";
+
+    this.button = document.createElement("button");
+    this.button.className = "dropdown-button";
+
+    this.text = document.createElement("p");
+    this.text.className = "dropdown-button-text";
+    this.text.textContent = text;
+
+    this.button.insertAdjacentElement("beforeend", this.text);
+    this.button.insertAdjacentHTML(
+      "beforeend",
+      `<p class="dropdown-arrow">▼</p>`
+    );
+
+    this.dropdown.insertAdjacentElement("beforeend", this.button);
+
+    this.list = document.createElement("div");
+    this.list.className = "dropdown-list";
+    this.dropdown.insertAdjacentElement("beforeend", this.list);
+
+    this.button.addEventListener("click", () => {
+      if (this.list.style.display === "flex") {
+        closeDropdown(this.dropdown);
+      } else {
+        closeAllDropdowns();
+        openDropdown(this.dropdown);
+      }
+    });
+
+    values.forEach((value) => {
+      const valueTemp = document.createElement("button");
+      valueTemp.className = "dropdown-option";
+      valueTemp.textContent = value;
+      this.list.insertAdjacentElement("beforeend", valueTemp);
+      valueTemp.addEventListener("click", () => {
+        this.button.querySelector(".dropdown-button-text").textContent = value;
+      });
+    });
+
+    parent.appendChild(this.dropdown);
+  }
+}
 
 // opens the given dropdown
 function openDropdown(dropdown) {
@@ -15,7 +73,7 @@ function closeDropdown(dropdown) {
 
 // closes all the dropdowns in the dropdowns list
 function closeAllDropdowns() {
-  dropdowns.forEach(closeDropdown);
+  document.querySelectorAll(".dropdown_calvin").forEach(closeDropdown);
 }
 
 // closes all dropdowns when the mouse is clicked on anything that is not a dropdown-button
@@ -25,25 +83,14 @@ document.addEventListener("click", (event) => {
   }
 });
 
-// adds event listeners to each dropdown
-dropdowns.forEach((dropdown) => {
-  const list = dropdown.querySelector(".dropdown-list");
-  const buttonText = dropdown.querySelector(".dropdown-button-text");
+new dropdown(document.querySelector(".known-dropdowns"), "Test1", [
+  "1",
+  "2",
+  "3",
+]);
 
-  // toggles the given dropdown and closes all other dropdowns when opened
-  dropdown.querySelector(".dropdown-button").addEventListener("click", () => {
-    if (list.style.display === "flex") {
-      closeDropdown(dropdown);
-    } else {
-      closeAllDropdowns();
-      openDropdown(dropdown);
-    }
-  });
-
-  // changes the text of the dropdown when one of the values is clicked
-  list.querySelectorAll(".dropdown-option").forEach((value) => {
-    value.addEventListener("click", () => {
-      buttonText.textContent = value.textContent;
-    });
-  });
-});
+new dropdown(document.querySelector(".known-dropdowns"), "Test2", [
+  "15",
+  "25",
+  "35",
+]);

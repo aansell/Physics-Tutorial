@@ -33,11 +33,8 @@ body {
 }
 
 .ButtonDiv {
+  position: relative;
   width: 100%;
-  text-align: center;
-  border: 1px solid orange;
-  background-color: #ea976a68;
-  display: block;
   text-decoration: none;
   top: 98%;
 }

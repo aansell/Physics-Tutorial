@@ -92,6 +92,10 @@ new dropdown(document.getElementById("known-dropdowns"), "Test1", [
   "1",
   "2",
   "3",
+  "4",
+  "5",
+  "6",
+  "7",
 ]);
 
 new dropdown(document.getElementById("known-dropdowns"), "Test2", [

@@ -1,5 +1,5 @@
 body {
-  font-family: 'Material Symbols Outlined', sans-serif; /* Setting font family for the document */
+  font-family: "Material Symbols Outlined", sans-serif; /* Setting font family for the document */
   margin: 0;
   padding: 0;
 }
@@ -7,7 +7,7 @@ body {
 #refresh {
   width: 25px;
   height: 25px;
-  }
+}
 
 .dropbox {
   width: 25%;
@@ -19,7 +19,7 @@ body {
   position: absolute;
   top: 0;
   padding: 50px;
-  }
+}
 #dropbox2 {
   width: 25%;
   height: 300px;
@@ -32,7 +32,7 @@ body {
   padding: 50px;
 }
 
-.variableDiv{
+.variableDiv {
   width: 100%;
   text-align: center;
   border: 1px solid orange;
@@ -40,110 +40,114 @@ body {
   display: block;
   text-decoration: none;
   padding: auto;
-  }
-.container{
+}
+.container {
   position: relative;
   vertical-align: top;
   width: 100%;
   height: 400px;
 }
-  .dropbtn {
-    background-color: #40ec4059;
-    color: black;
-    padding: 16px;
-    font-size: 16px;
-    border: 1px solid green;
-  }
-  
-  /* Dropdown container */
-  .dropdown {
-    position: absolute;
-    margin: 20px;
-    top: 0;
-    left: 1200px;
-    display: inline-block;
-  }
-  
-  /* Dropdown content (hidden by default) */
-  .dropdown-content {
-    display: none;
-    position: relative;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    z-index: 1;
-  }
-  
-  /* Show the dropdown menu on hover */
-  .dropdown:hover .dropdown-content {
-    display: block;
-  }
-  
-  /* Change background color of items on hover */
-  .item:hover {
-    background-color: #ddd;
-  }
+.dropbtn {
+  background-color: #40ec4059;
+  color: black;
+  padding: 16px;
+  font-size: 16px;
+  border: 1px solid green;
+}
 
-  #text-container{
-    position: absolute;
-    top: 0;
-    width: 1000px;
-    height: 100px;
-    margin-left: 50px;
-    margin-top: 70px; 
-    padding: 50px;
-  }
+/* Dropdown container */
+.dropdown {
+  position: absolute;
+  margin: 20px;
+  top: 0;
+  left: 1200px;
+  display: inline-block;
+}
 
-  #knowns{
-    font: times;
-    size-adjust: 24;
-    display: inline-block;
-    margin-right: 55%;
-  }
-  
-  #unknowns{
-    font: times;
-    size-adjust: 24;
-    display: inline-block;
-  }
-  /* Jackson's css for side panel */
-  #side-panel {
-    position: fixed;
-    top: 0;
-    left: -100%; /* Start off-screen */
-    width: 300px; /* Width of the side panel */
-    height: 100%; /* Full height of the viewport */
-    background: #f0f0f0; /* Background color of the side panel */
-    transition: left 0.3s ease; /* Transition effect for opening and closing the panel */
-    z-index: 1000; /* Z-index to control the stacking order */
-    overflow-y: auto; /* Add scrollbar when content exceeds height */
-  }
-  
-  #side-panel.open {
-    left: 0; /* Position the panel to the left when open */
-  }
-  
-  #toggle-btn {
-    position: fixed; /* Fixed position */
-    top: 50%; /* Center vertically */
-    right: 97%; /* Align to the right edge */
-    transform: translateY(-50%); /* Center vertically */
-    z-index: 1001; /* Higher z-index to appear on top of the panel */
-    cursor: pointer; /* Change cursor to pointer */
-  }
-  
-  .material-symbols-outlined {
-    font-size: 24px; /* Font size for the toggle button icon */
-  }
-  
-  .panel-content {
-    padding: 20px; /* Padding for the content inside the panel */
-  }
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+  display: none;
+  position: relative;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  z-index: 1;
+}
 
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Change background color of items on hover */
+.item:hover {
+  background-color: #ddd;
+}
+
+#text-container {
+  position: absolute;
+  top: 0;
+  width: 1000px;
+  height: 100px;
+  margin-left: 50px;
+  margin-top: 70px;
+  padding: 50px;
+}
+
+#knowns {
+  font: times;
+  size-adjust: 24;
+  display: inline-block;
+  margin-right: 55%;
+}
+
+#unknowns {
+  font: times;
+  size-adjust: 24;
+  display: inline-block;
+}
+/* Jackson's css for side panel */
+#side-panel {
+  position: fixed;
+  top: 0;
+  left: -100%; /* Start off-screen */
+  width: 300px; /* Width of the side panel */
+  height: 100%; /* Full height of the viewport */
+  background: #f0f0f0; /* Background color of the side panel */
+  transition: left 0.3s ease; /* Transition effect for opening and closing the panel */
+  z-index: 1000; /* Z-index to control the stacking order */
+  overflow-y: auto; /* Add scrollbar when content exceeds height */
+}
+
+#side-panel.open {
+  left: 0; /* Position the panel to the left when open */
+}
+
+#toggle-btn {
+  position: fixed; /* Fixed position */
+  top: 50%; /* Center vertically */
+  right: 97%; /* Align to the right edge */
+  transform: translateY(-50%); /* Center vertically */
+  z-index: 1001; /* Higher z-index to appear on top of the panel */
+  cursor: pointer; /* Change cursor to pointer */
+}
+
+.material-symbols-outlined {
+  font-size: 24px; /* Font size for the toggle button icon */
+}
+
+.panel-content {
+  padding: 20px; /* Padding for the content inside the panel */
+}
 
 /* Calvin's css*/
 :root {
   --dropdown-color: #ddd;
   --dropdown-selected-color: #6bf;
+}
+
+#known-dropdowns {
+  display: flex;
+  flex-direction: column;
 }
 
 .dropdown_calvin {
@@ -174,6 +178,7 @@ body {
   overflow: hidden;
   border-radius: 0.5rem;
   margin-top: 0.25rem;
+  z-index: 1;
 }
 
 .dropdown-option {

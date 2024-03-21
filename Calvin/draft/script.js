@@ -14,6 +14,19 @@ class variableDiv {
   }
 }
 
+class dropBoxDiv {
+  constructor(parent) {
+    this.variable = document.createElement("div");
+    this.variable.id = "text-container";
+    this.variable.className = "dropbox";
+    parent.appendChild(this.variable);
+    this.variable.addEventListener("ondragover", allowDrop);
+    this.variable.addEventListener("ondrop", drop);
+    }
+  }
+
+
+//Functions for a dropbox prefab (box which stores draggable elements)
 function allowDrop(ev) {
     ev.preventDefault();
   }
@@ -41,7 +54,7 @@ fetch('problems.json') // Assuming problems.json is the file containing the JSON
     });
   })
   .catch(error => {
-    // Handle any errors that occur during fetching or parsing
+
     console.error('Error fetching or parsing JSON:', error);
   });
 
@@ -63,3 +76,28 @@ function togglePanel() {
     toggleBtn.style.right = "97%"; // Move button back to original position
   }
 }
+
+function createDropBox() {
+var parentDiv = document.getElementById("panel-content");
+new dropBoxDiv(parentDiv);
+new dropBoxDiv(parentDiv);
+}
+
+
+
+/*
+// Knowns/unknowns HTML code translated to JS
+<div id="text-container">
+    <p id="knowns">Knowns</p>
+    <p id="unknowns">Unknowns</p>
+</div>
+
+<div class="container">
+    <p>
+    <div id="dropbox1" ondrop="drop(event)" ondragover="allowDrop(event)"></div> 
+</p>
+<p>
+    <div id="dropbox2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+</p>
+*/
+createDropBox();

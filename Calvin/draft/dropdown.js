@@ -78,18 +78,23 @@ function closeAllDropdowns() {
 
 // closes all dropdowns when the mouse is clicked on anything that is not a dropdown-button
 document.addEventListener("click", (event) => {
-  if (!event.target.matches(".dropdown-button")) {
+  if (
+    !(
+      event.target.matches(".dropdown-button") ||
+      event.target.closest(".dropdown-button")
+    )
+  ) {
     closeAllDropdowns();
   }
 });
 
-new dropdown(document.querySelector(".known-dropdowns"), "Test1", [
+new dropdown(document.getElementById("known-dropdowns"), "Test1", [
   "1",
   "2",
   "3",
 ]);
 
-new dropdown(document.querySelector(".known-dropdowns"), "Test2", [
+new dropdown(document.getElementById("known-dropdowns"), "Test2", [
   "15",
   "25",
   "35",

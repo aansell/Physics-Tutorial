@@ -145,7 +145,17 @@ body {
   --dropdown-selected-color: #6bf;
 }
 
+#var-dropdowns {
+  display: flex;
+  flex-direction: row;
+}
+
 #known-dropdowns {
+  display: flex;
+  flex-direction: column;
+}
+
+#wants-dropdowns {
   display: flex;
   flex-direction: column;
 }
@@ -179,6 +189,7 @@ body {
   border-radius: 0.5rem;
   margin-top: 0.25rem;
   z-index: 1;
+  box-shadow: 0rem 0rem 0.25rem #000;
 }
 
 .dropdown-option {

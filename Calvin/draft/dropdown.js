@@ -88,18 +88,19 @@ document.addEventListener("click", (event) => {
   }
 });
 
-new dropdown(document.getElementById("known-dropdowns"), "Test1", [
-  "1",
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-]);
+fetch("problems.json")
+  .then((response) => response.json()) // Parse JSON
+  .then((problems) => {
+    let knows = document.getElementById("known-dropdowns");
+    let wants = document.getElementById("want-dropdowns");
+    let variables = problems[0].variables.map((variable) => variable.name);
 
-new dropdown(document.getElementById("known-dropdowns"), "Test2", [
-  "15",
-  "25",
-  "35",
-]);
+    for (let index = 1; index < variables.length; index++) {
+      new dropdown(knows, "Variable", variables);
+    }
+
+    new dropdown(wants, "Variable", variables);
+  })
+  .catch((error) => {
+    console.error("Error fetching or parsing JSON:", error);
+  });

@@ -1,22 +1,23 @@
 class ButtonDiv {
     constructor(parent,previousPage,NextPage) {
-        this.buttonDiv = document.createElement("div");
-        this.buttonDiv.className = "ButtonDiv";
-        var prev = document.createElement("button");
-        prev.innerHTML = "Back";
-        prev.style.textAlign = "left";
-        prev.addEventListener("click", (event) => {
+        this.buttonDivRight = document.createElement("div");
+        this.buttonDivLeft = document.createElement("div");
 
-        });
-        var next = document.createElement("button");
-        next.innerHTML = "Continue";
-        next.style.textAlign = "right";
-        next.addEventListener("click", (event) => {
+        this.buttonDivRight.className = "ButtonDiv";
+        this.buttonDivLeft.className = "ButtonDiv";
 
-        });
-        this.buttonDiv.appendChild(prev);
-        this.buttonDiv.appendChild(next);
-        parent.appendChild(this.buttonDiv);
+        var buttonLeft = document.createElement("button");
+        buttonLeft.innerText = "Previous";
+        var buttonRight = document.createElement("button");
+        buttonRight.innerText = "Continue";
+
+        this.buttonDivLeft.appendChild(buttonLeft);
+        this.buttonDivRight.appendChild(buttonRight);
+
+
+
+        parent.appendChild(this.buttonDivRight);
+        parent.appendChild(this.buttonDivLeft);
     }
 }
 

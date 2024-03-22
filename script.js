@@ -1,3 +1,4 @@
+/*
 class variableDiv {
   constructor(parent, name, value) {
     this.variable = document.createElement("div");
@@ -13,18 +14,38 @@ class variableDiv {
     }
   }
 }
+*/
 
 class dropBoxDiv {
-  constructor(parent) {
+  constructor(parent, headerText) {
     this.variable = document.createElement("div");
     this.variable.id = "text-container";
     this.variable.className = "dropbox";
     parent.appendChild(this.variable);
+    this.addHeader(headerText);
     this.variable.addEventListener("ondragover", allowDrop);
     this.variable.addEventListener("ondrop", drop);
     }
-  }
+    addHeader(text) {
+      const header = document.createElement("h3");
+      header.textContent = text;
+      this.variable.appendChild(header);
+    }
+  } 
 
+class equationDiv {
+  constructor(parent, headerText) {
+    this.variable = document.createElement("div");
+    this.variable.id = "equationBox";
+    parent.appendChild(this.variable);
+    this.addHeader(headerText);
+    }
+    addHeader(text) {
+      const header = document.createElement("h3");
+      header.textContent = text;
+      this.variable.appendChild(header);
+    }
+  }
 
 //Functions for a dropbox prefab (box which stores draggable elements)
 function allowDrop(ev) {
@@ -42,7 +63,8 @@ function allowDrop(ev) {
     ev.target.appendChild(document.getElementById(data));
   }  
 }
-
+/*
+//Parsing data from JSON file
 var letter = "F";
 fetch('problems.json') // Assuming problems.json is the file containing the JSON data
   .then(response => response.json()) // Parse the JSON from the response
@@ -57,7 +79,7 @@ fetch('problems.json') // Assuming problems.json is the file containing the JSON
 
     console.error('Error fetching or parsing JSON:', error);
   });
-
+*/
 
 document.getElementById("toggle-btn").addEventListener("click", togglePanel);
 
@@ -79,8 +101,9 @@ function togglePanel() {
 
 function createDropBox() {
 var parentDiv = document.getElementById("panel-content");
-new dropBoxDiv(parentDiv);
-new dropBoxDiv(parentDiv);
+new dropBoxDiv(parentDiv, "Knowns");
+new dropBoxDiv(parentDiv, "Unknowns");
+new equationDiv(parentDiv, "Equations");
 }
 
 

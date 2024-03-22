@@ -1,0 +1,55 @@
+
+[
+    {
+        "operation": "=",
+        "content": [
+            "v",
+            {
+                "operation": "/",
+                "content": [
+                    "{delta}d",
+                    "{delta}t"
+                ]
+            }
+        ]
+    },
+    {
+        "operation": "=",
+        "content": [
+            "x",
+            {
+                "operation": "+",
+                "content": [
+                    "x_0",
+                    {
+                        "operation": "*",
+                        "content": [
+                            "v_0",
+                            "t"
+                        ]
+                    },
+                    {
+                        "operation": "*",
+                        "content": [
+                            {
+                                "operation": "/",
+                                "content": [
+                                    1,
+                                    2
+                                ]
+                            },
+                            "a",
+                            {
+                                "operation": "^",
+                                "content": [
+                                    "t",
+                                    2
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

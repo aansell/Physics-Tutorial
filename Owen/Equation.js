@@ -1,24 +1,30 @@
-class Variable {
-    /* */
-    constructor(name, power) {
-        if(typeof(name) != 'string') throw new Error("Constructor for class Variable takes parameter name as a string. Name was not a string.");
-        if(typeof(power) != 'bigint') throw new Error("Constructor for class Variable takes parameter power as a number. Power was not a number.");
-        this.name = name;
-        this.power = power;
-    }
-}
+class Operation {
+    operation;
+    content;
 
-class Term {
-    /* variables should be an array of Variable */
-    constructor(variables) {
-        if(!Array.isArray(variables)) throw new Error("Constructor for class Term takes an array of objects. No array was provided.");
-        
-        this.variables = variables; 
+    /* */
+    constructor(operation, content) {
+        if(typeof(operation) != 'string') throw new Error("Constructor for class Operation takes parameter operation as a string. Operation was not a string.");
+        this.operation = operation;
+        if(!Array.isArray(content))  throw new Error("Constructor for class Operation takes parameter content as an array. Content was not an array.");
+        if(operation == "-") {
+            operation = "+";
+            this.content = [content[0], null];
+            this.content[1] = new Operation("*", [content[1], -1]);
+        } else if(operation == "/") {
+            operation = "*";
+            this.content = [content[0], null];
+            this.content[1] = new Operation("^", [content[1], -1]);
+        } else if(operation == "+" || operation == "*" || operation == "^") {
+            this.content = content;
+        } else {
+            throw new Error("Unrecognized operation passed to Operation constructor.");
+        }
     }
 }
 
 class Equation {
-    /* varName = equation
+    /* operator =
     equation should be a 3-dimensional array.
     first level is summed: [[]] + [[]] */
     constructor(varName, equation) {

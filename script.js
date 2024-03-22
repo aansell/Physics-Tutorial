@@ -47,6 +47,16 @@ class equationDiv {
     }
   }
 
+  class boxDiv {
+    constructor(parent) {
+      this.variable = document.createElement("div");
+      this.variable.id = "mainEquationBox";
+      parent.appendChild(this.variable);
+      this.variable.addEventListener("ondragover", allowDrop);
+      this.variable.addEventListener("ondrop", drop);
+    }
+  }
+
 //Functions for a dropbox prefab (box which stores draggable elements)
 function allowDrop(ev) {
     ev.preventDefault();
@@ -101,9 +111,11 @@ function togglePanel() {
 
 function createDropBox() {
 var parentDiv = document.getElementById("panel-content");
+var parentBoxDiv = document.getElementById("main-content")
 new dropBoxDiv(parentDiv, "Knowns");
 new dropBoxDiv(parentDiv, "Unknowns");
 new equationDiv(parentDiv, "Equations");
+new boxDiv(parentBoxDiv);
 }
 
 

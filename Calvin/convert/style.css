@@ -1,0 +1,53 @@
+* {
+  margin: 0;
+  padding: 0;
+  background: #333;
+  color: #fff;
+}
+
+.convert {
+  display: flex;
+  width: 32rem;
+  height: 8rem;
+  border: 1px solid #555;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1rem;
+  margin: 1rem;
+}
+
+.equation {
+  display: flex;
+  flex-direction: row;
+}
+
+.equal-sign {
+  height: 2rem;
+  font-size: 2rem;
+  padding: 0rem 1rem 0rem 1rem;
+  align-content: center;
+}
+
+.left-side,
+.right-side {
+  display: flex;
+  width: 12rem;
+  flex-direction: column;
+}
+
+.number-input,
+.left-side-unit,
+.right-side-unit {
+  border: 1px solid #555;
+}
+
+.number-input {
+  height: 2rem;
+  font-size: 1.75rem;
+}
+
+.left-side-unit,
+.right-side-unit {
+  height: 1.5rem;
+  font-size: 0.75rem;
+}

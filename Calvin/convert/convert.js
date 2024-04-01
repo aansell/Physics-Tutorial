@@ -18,6 +18,7 @@ const unit = {
   mm: 0.001,
 
   // mass
+  ton: 907184.74,
   kg: 1000,
   lb: 453.59237,
   oz: 28.349523125,
@@ -25,8 +26,55 @@ const unit = {
   mg: 0.001,
 };
 
-console.log(convert(1, unit.mi, unit.ft));
-console.log(convert(1, unit.km, unit.m));
-console.log(convert(180, unit.sec, unit.hr));
-console.log(convert(1, unit.g, unit.kg));
-console.log(convert(1, unit.lb, unit.oz));
+const equation = document.querySelector(".convert").querySelector(".equation");
+
+const leftSide = equation.querySelector(".left-side");
+const leftSideNumber = leftSide.querySelector(".number-input");
+const leftSideUnit = leftSide.querySelector(".left-side-unit");
+
+const rightSide = equation.querySelector(".right-side");
+const rightSideNumber = rightSide.querySelector(".number-input");
+const rightSideUnit = rightSide.querySelector(".right-side-unit");
+
+for (let key in unit) {
+  leftSideUnit.insertAdjacentHTML(
+    "beforeend",
+    `<option value="${key}">${key}</option>`
+  );
+  rightSideUnit.insertAdjacentHTML(
+    "beforeend",
+    `<option value="${key}">${key}</option>`
+  );
+}
+
+leftSideNumber.addEventListener("input", (event) => {
+  rightSideNumber.value = convert(
+    parseFloat(event.target.value),
+    unit[leftSideUnit.value],
+    unit[rightSideUnit.value]
+  );
+});
+
+leftSideUnit.addEventListener("change", (event) => {
+  rightSideNumber.value = convert(
+    parseFloat(leftSideNumber.value),
+    unit[leftSideUnit.value],
+    unit[rightSideUnit.value]
+  );
+});
+
+rightSideNumber.addEventListener("input", (event) => {
+  leftSideNumber.value = convert(
+    parseFloat(event.target.value),
+    unit[rightSideUnit.value],
+    unit[leftSideUnit.value]
+  );
+});
+
+rightSideUnit.addEventListener("change", (event) => {
+  leftSideNumber.value = convert(
+    parseFloat(rightSideNumber.value),
+    unit[rightSideUnit.value],
+    unit[leftSideUnit.value]
+  );
+});

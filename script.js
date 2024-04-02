@@ -33,12 +33,23 @@ class dropBoxDiv {
     }
   } 
 
-class equationDiv {
-  constructor(parent, headerText) {
-    this.variable = document.createElement("div");
-    this.variable.id = "equationBox";
-    parent.appendChild(this.variable);
-    this.addHeader(headerText);
+  class equationDiv {
+    constructor(parent, headerText) {
+      this.variable = document.createElement("div");
+      this.variable.id = "equationBox";
+      parent.appendChild(this.variable);
+      this.addHeader(headerText);
+  
+      this.divOne = document.createElement("div");
+      this.divOne.draggable = true;
+      this.divOne.className = "divOne";
+      this.divOne.id = "draggedDiv"; // Add an ID to identify the dragged div
+      this.variable.appendChild(this.divOne);
+  
+      this.divOne.addEventListener("dragstart", drag); // Add dragstart event listener
+  
+      this.variable.addEventListener("dragover", allowDrop);
+      this.variable.addEventListener("drop", drop);
     }
     addHeader(text) {
       const header = document.createElement("h3");
@@ -46,19 +57,27 @@ class equationDiv {
       this.variable.appendChild(header);
     }
   }
-
+  
   class boxDiv {
     constructor(parent) {
       this.variable = document.createElement("div");
       this.variable.id = "mainEquationBox";
       parent.appendChild(this.variable);
-      this.variable.addEventListener("ondragover", allowDrop);
-      this.variable.addEventListener("ondrop", drop);
+  
+      this.divOne = document.createElement("div");
+      this.divOne.draggable = true;
+      this.divOne.className = "divOne";
+      this.divOne.id = "draggedDiv"; // Add an ID to identify the dragged div
+      this.variable.appendChild(this.divOne);
+  
+      this.divOne.addEventListener("dragstart", drag); // Add dragstart event listener
+  
+      this.variable.addEventListener("dragover", allowDrop);
+      this.variable.addEventListener("drop", drop);
     }
   }
-
-//Functions for a dropbox prefab (box which stores draggable elements)
-function allowDrop(ev) {
+  
+  function allowDrop(ev) {
     ev.preventDefault();
   }
   
@@ -68,11 +87,16 @@ function allowDrop(ev) {
   
   function drop(ev) {
     ev.preventDefault();
-    if(ev.target.id == "dropbox1" || ev.target.id == "dropbox2") {
     var data = ev.dataTransfer.getData("text");
-    ev.target.appendChild(document.getElementById(data));
-  }  
-}
+    var draggedElement = document.getElementById(data);
+    if (ev.target.id === "draggedDiv") {
+      // Swap the positions of the dragged element and the target element
+      ev.target.parentNode.insertBefore(draggedElement, ev.target.nextSibling);
+    } else {
+      ev.target.appendChild(draggedElement);
+    }
+  }
+  
 /*
 //Parsing data from JSON file
 var letter = "F";

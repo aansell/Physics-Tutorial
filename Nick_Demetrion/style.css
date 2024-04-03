@@ -200,8 +200,8 @@ body {
 }
 
 
-.crossed-out{
-  color : 'red';
-  text-decoration: 'line-through';
 
+.crossed-out {
+  text-decoration: line-through;
+  color: red;
 }

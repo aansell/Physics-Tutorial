@@ -47,9 +47,11 @@ dropdowns.forEach((dropdown) => {
     });
   });
 });
-
+/*
+//Error line 52
 value.addEventListener("click", () => {
 if(buttonText.textContent == "v"){
     var correctAnswer = true;
   }
 });
+*/

@@ -23,15 +23,15 @@ class dropBoxDiv {
     this.variable.className = "dropbox";
     parent.appendChild(this.variable);
     this.addHeader(headerText);
-    this.variable.addEventListener("ondragover", allowDrop);
-    this.variable.addEventListener("ondrop", drop);
-    }
-    addHeader(text) {
-      const header = document.createElement("h3");
-      header.textContent = text;
-      this.variable.appendChild(header);
-    }
-  } 
+    this.variable.addEventListener("dragover", allowDrop); // Use "dragover" without "on"
+    this.variable.addEventListener("drop", drop); // Use "drop" without "on"
+  }
+  addHeader(text) {
+    const header = document.createElement("h3");
+    header.textContent = text;
+    this.variable.appendChild(header);
+  }
+} 
 
 class equationDiv {
   constructor(parent, headerText) {
@@ -39,40 +39,73 @@ class equationDiv {
     this.variable.id = "equationBox";
     parent.appendChild(this.variable);
     this.addHeader(headerText);
-    }
-    addHeader(text) {
-      const header = document.createElement("h3");
-      header.textContent = text;
-      this.variable.appendChild(header);
-    }
-  }
 
-  class boxDiv {
-    constructor(parent) {
-      this.variable = document.createElement("div");
-      this.variable.id = "mainEquationBox";
-      parent.appendChild(this.variable);
-      this.variable.addEventListener("ondragover", allowDrop);
-      this.variable.addEventListener("ondrop", drop);
-    }
-  }
+    this.divOne = document.createElement("div");
+    this.divOne.draggable = true;
+    this.divOne.className = "divOne";
+    this.divOne.id = "eqution0";
+    this.variable.appendChild(this.divOne);
 
-//Functions for a dropbox prefab (box which stores draggable elements)
-function allowDrop(ev) {
-    ev.preventDefault();
+    const divOneHeader = document.createElement("h3");
+    divOneHeader.textContent = "v = d/t";
+    this.divOne.appendChild(divOneHeader);
+
+    this.divOne.addEventListener("dragstart", drag);
+
+    this.variable.addEventListener("dragover", allowDrop);
+    this.variable.addEventListener("drop", drop);
   }
-  
-  function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
+  addHeader(text) {
+    const header = document.createElement("h3");
+    header.textContent = text;
+    this.variable.appendChild(header);
   }
-  
-  function drop(ev) {
-    ev.preventDefault();
-    if(ev.target.id == "dropbox1" || ev.target.id == "dropbox2") {
-    var data = ev.dataTransfer.getData("text");
-    ev.target.appendChild(document.getElementById(data));
-  }  
 }
+
+class boxDiv {
+  constructor(parent) {
+    this.variable = document.createElement("div");
+    this.variable.id = "mainEquationBox";
+    parent.appendChild(this.variable);
+
+    this.divOne = document.createElement("div");
+    this.divOne.draggable = true;
+    this.divOne.className = "divOne";
+    this.divOne.id = "equation1";
+    this.variable.appendChild(this.divOne);
+
+    const divOneHeader = document.createElement("h3");
+    divOneHeader.textContent = "x = x0 v0t + 1/2at^2";
+    this.divOne.appendChild(divOneHeader);
+
+    this.divOne.addEventListener("dragstart", drag);
+
+    this.variable.addEventListener("dragover", allowDrop);
+    this.variable.addEventListener("drop", drop);
+  }
+}
+
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  var draggedElement = document.getElementById(data);
+  if (ev.target.className === "divOne") {
+    // Swap the positions of the dragged element and the target element
+    ev.target.parentNode.insertBefore(draggedElement, ev.target.nextSibling);
+  } else {
+    ev.target.appendChild(draggedElement);
+  }
+}
+
+  
 /*
 //Parsing data from JSON file
 var letter = "F";

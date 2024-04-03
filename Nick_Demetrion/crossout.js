@@ -1,46 +1,25 @@
-
-function getTextbyClicking(){
+function getTextbyClicking() {
+  // Get the clickable text at the start of the program
   const clickableText = document.getElementById('clickable-text');
+  console.log(clickableText.textContent);
 
-  // Add a click event listener to the text element
-  clickableText.addEventListener('click', function() {
-    // Store the text content of the clicked element in a variable
-    const clickedText = this.textContent;
-    textCrossOut(clickedText);
-    
-    // Display the text in the console (you can store it in a variable or use it as needed)
-    //console.log(clickedText);
-    return clickedText;
-    // Example: Store the text in a variable for later use
-    // const storedText = clickedText;
+  // Add event listeners to the clickable text to toggle the crossed-out style
+  clickableText.addEventListener('mouseenter', () => {
+    console.log("mouse enter");
+    clickableText.classList.add('crossed-out');
+    //clickableText.style.textDecoration = 'line-through';
+    //clickableText.style.color = 'red';
   });
-    
+
+  clickableText.addEventListener('mouseleave', () => {
+    clickableText.classList.remove('crossed-out');
+    //clickableText.style.textDecoration = 'none';
+    //clickableText.style.color = ''; // Reset color to default
+  });
+
+  clickableText.addEventListener('click', () => {
+    clickableText.style.display = 'none'; // Hide the text when clicked
+  });
 }
 
-function textCrossOut(text) {
-  const element = document.createElement('p');
-  element.textContent = text;
-  console.log(element.textContent);
-  element.classList.add('text-to-cross-out');
-
-  element.addEventListener('mouseenter', () => {
-    element.classList.add('crossed-out');
-  });
-
-  element.addEventListener('mouseleave', () => {
-    element.classList.remove('crossed-out');
-  });
-
-  element.addEventListener('click', () => {
-    element.style.display = 'none'; // Hide the text when clicked
-  });
-
-  document.body.appendChild(element);
-
-
-}
-
-let textToCrossOut = getTextbyClicking();
-
-const crossedText = textCrossOut(textToCrossOut);
-
+getTextbyClicking();

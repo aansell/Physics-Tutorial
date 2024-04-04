@@ -11,11 +11,11 @@ class Operation {
         if(!Array.isArray(operObject.content))  throw new Error("Constructor for class Operation takes parameter content as an array. Content was not an array.");
         
         if(operObject.operation == "-") {
-            operObject.operation = "+";
+            this.operation = "+";
             var second = {operation: "*", content: [operObject.content[1], -1]};
             this.content = [operObject.content[0], new Operation(second)];
         } else if(operObject.operation == "/") {
-            operObject.operation = "*";
+            this.operation = "*";
             var second = {operation: "^", content: [operObject.content[1], -1]};
             this.content = [operObject.content[0], new Operation(second)];
         } else if(operObject.operation == "+" || operObject.operation == "*" || operObject.operation == "^") {

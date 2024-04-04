@@ -12,19 +12,19 @@ class Operation {
         
         if(operObject.operation == "-") {
             operObject.operation = "+";
-            this.content = [operObject.content[0], null];
-            this.content[1] = new Operation("*", [operObject.content[1], -1]);
+            var second = {operation: "*", content: [operObject.content[1], -1]};
+            this.content = [operObject.content[0], new Operation(second)];
         } else if(operObject.operation == "/") {
             operObject.operation = "*";
-            this.content = [operObject.content[0], null];
-            this.content[1] = new Operation("^", [operObject.content[1], -1]);
+            var second = {operation: "^", content: [operObject.content[1], -1]};
+            this.content = [operObject.content[0], new Operation(second)];
         } else if(operObject.operation == "+" || operObject.operation == "*" || operObject.operation == "^") {
-            this.content = operObjectcontent;
+            this.content = operObject.content;
         } else {
             throw new Error("Unrecognized operation passed to Operation constructor.");
         }
 
-        this.content.forEach(item, index, arr => {
+        this.content.forEach((item, index, arr) => {
             if(typeof item == "object") {
                 arr[index] = new Operation(item);
             }

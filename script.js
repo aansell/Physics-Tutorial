@@ -65,9 +65,9 @@ class equationDiv {
 class boxDiv {
   constructor(parent) {
     this.variable = document.createElement("div");
-    this.variable.id = "mainEquationBox";
     parent.appendChild(this.variable);
-
+    this.variable.id = "mainEquationBox";
+    
     this.divOne = document.createElement("div");
     this.divOne.draggable = true;
     this.divOne.className = "divOne";
@@ -75,6 +75,7 @@ class boxDiv {
     this.variable.appendChild(this.divOne);
 
     const divOneHeader = document.createElement("h3");
+
     divOneHeader.textContent = "x = x0 v0t + 1/2at^2";
     this.divOne.appendChild(divOneHeader);
 

@@ -1,27 +1,26 @@
-function convert(value, valueUnit, wantUnit) {
-  return (value * valueUnit) / wantUnit;
+function convert(value, valueConversion, wantConversion) {
+  return (value * valueConversion) / wantConversion;
 }
 
 function convertFormat(leftSide) {
-  let leftUnit = null;
-  let rightUnit = null;
-  if (unit[unitSelect.value].hasOwnProperty("top")) {
-    const leftTop =
-      unit[unit[unitSelect.value].top][leftSideUnit.value.split("/")[0]];
-    const leftBottom =
-      unit[unit[unitSelect.value].bottom][leftSideUnit.value.split("/")[1]];
+  let leftTop = 1;
+  let rightTop = 1;
+  unitDictionary[unitSelect.value].top.forEach((top) => {
+    leftTop *= conversionDictionary[top][leftSideUnit.value.split("/")[0]];
+    rightTop *= conversionDictionary[top][rightSideUnit.value.split("/")[0]];
+  });
 
-    const rightTop =
-      unit[unit[unitSelect.value].top][rightSideUnit.value.split("/")[0]];
-    const rightBottom =
-      unit[unit[unitSelect.value].bottom][rightSideUnit.value.split("/")[1]];
+  let leftBottom = 1;
+  let rightBottom = 1;
+  unitDictionary[unitSelect.value].bottom.forEach((bottom) => {
+    leftBottom *=
+      conversionDictionary[bottom][leftSideUnit.value.split("/")[1]];
+    rightBottom *=
+      conversionDictionary[bottom][rightSideUnit.value.split("/")[1]];
+  });
 
-    leftUnit = leftTop / leftBottom;
-    rightUnit = rightTop / rightBottom;
-  } else {
-    leftUnit = unit[unitSelect.value][leftSideUnit.value];
-    rightUnit = unit[unitSelect.value][rightSideUnit.value];
-  }
+  let leftUnit = leftTop / leftBottom;
+  let rightUnit = rightTop / rightBottom;
   if (leftSide) {
     leftSideNumber.value = convert(
       parseFloat(rightSideNumber.value),
@@ -43,7 +42,8 @@ function convertFormat(leftSide) {
   }
 }
 
-const unit = {
+const conversionDictionary = {
+  "": { "": 1 },
   time: {
     hour: 3600,
     minute: 60,
@@ -66,9 +66,33 @@ const unit = {
     gram: 1,
     milligram: 0.001,
   },
+};
+
+const unitDictionary = {
+  time: {
+    top: ["time"],
+    bottom: [""],
+  },
+
+  distance: {
+    top: ["distance"],
+    bottom: [""],
+  },
+
+  mass: {
+    top: ["mass"],
+    bottom: [""],
+  },
+
   speed: {
-    top: "distance",
-    bottom: "time",
+    top: ["distance"],
+    bottom: ["time"],
+  },
+
+  // broken
+  density: {
+    top: ["mass"],
+    bottom: ["distance", "distance", "distance"],
   },
 };
 
@@ -84,7 +108,7 @@ const rightSide = equation.querySelector(".right-side");
 const rightSideNumber = rightSide.querySelector(".number-input");
 const rightSideUnit = rightSide.querySelector(".right-side-unit");
 
-for (let key in unit) {
+for (let key in unitDictionary) {
   unitSelect.insertAdjacentHTML(
     "beforeend",
     `<option value="${key}">${key}</option>`
@@ -94,35 +118,28 @@ for (let key in unit) {
 function setUnitSelect(unitSelected) {
   leftSideUnit.innerHTML = "";
   rightSideUnit.innerHTML = "";
-  if (unitSelected.hasOwnProperty("top")) {
-    for (let top in unit[unitSelected.top]) {
-      for (let bottom in unit[unitSelected.bottom]) {
-        leftSideUnit.insertAdjacentHTML(
-          "beforeend",
-          `<option value="${top}/${bottom}">${top} per ${bottom}</option>`
-        );
-        rightSideUnit.insertAdjacentHTML(
-          "beforeend",
-          `<option value="${top}/${bottom}">${top} per ${bottom}</option>`
-        );
+
+  for (let top in conversionDictionary[unitSelected.top]) {
+    for (let bottom in conversionDictionary[unitSelected.bottom]) {
+      console.log(top, bottom);
+      let displayValue = top;
+      if (bottom !== "") {
+        displayValue = `${top} per ${bottom}`;
       }
-    }
-  } else {
-    for (let key in unitSelected) {
       leftSideUnit.insertAdjacentHTML(
         "beforeend",
-        `<option value="${key}">${key}</option>`
+        `<option value="${top}/${bottom}">${displayValue}</option>`
       );
       rightSideUnit.insertAdjacentHTML(
         "beforeend",
-        `<option value="${key}">${key}</option>`
+        `<option value="${top}/${bottom}">${displayValue}</option>`
       );
     }
   }
 }
 
 unitSelect.addEventListener("change", () => {
-  setUnitSelect(unit[unitSelect.value]);
+  setUnitSelect(unitDictionary[unitSelect.value]);
   convertFormat(false);
 });
 
@@ -142,4 +159,4 @@ rightSideUnit.addEventListener("change", () => {
   convertFormat(false);
 });
 
-setUnitSelect(unit.time);
+setUnitSelect(unitDictionary.time);

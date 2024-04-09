@@ -1,15 +1,15 @@
-class ButtonDiv {
-    constructor(parent,previousPage,NextPage) {
-        var secondDiv = document.createElement("div");
-        //secondDiv.className = "";
-        var buttonLeft = document.createElement("button");
-        buttonLeft.innerText = "Previous";
-        var buttonRight = document.createElement("button");
-        buttonRight.innerText = "Continue";
-        secondDiv.appendChild(buttonLeft);
-        secondDiv.appendChild(buttonRight);
-        parent.appendChild(secondDiv);
-    }
-}
+const body = document.querySelector('body');
 
-new ButtonDiv(document.getElementById("buttonDiv"),"prev.hml", "next.html");
+const buttonContainer = document.createElement('div');
+buttonContainer.classList.add('button-container');
+
+const leftButton = document.createElement('button');
+leftButton.textContent = 'Back';
+
+const rightButton = document.createElement('button');
+rightButton.textContent = 'Next';
+
+buttonContainer.appendChild(leftButton);
+buttonContainer.appendChild(rightButton);
+
+body.appendChild(buttonContainer);

@@ -32,6 +32,12 @@ body {
     padding: 50px;
   }
   
+.equation {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  letter-spacing: 2px; 
+}
+
   .variableDiv{
     width: 100%;
     text-align: center;

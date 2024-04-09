@@ -46,8 +46,20 @@ class equationDiv {
     this.divOne.id = "eqution0";
     this.variable.appendChild(this.divOne);
 
-    const divOneHeader = document.createElement("h3");
-    divOneHeader.textContent = "v = d/t";
+    const divOneHeader = document.createElement("math");
+
+    var jsonEquations = fetch("Equation.json").then(response => response.json());
+
+    jsonEquations.then(result => {
+        var equations = new Array();
+        result.forEach(item => {
+            equations.push(new Equation(item));
+        })
+        return equations;
+    }).then(result => {
+      EquationToHTML(result[1], divOneHeader);
+    });
+
     this.divOne.appendChild(divOneHeader);
 
     this.divOne.addEventListener("dragstart", drag);
@@ -75,29 +87,18 @@ class boxDiv {
     this.variable.appendChild(this.divOne);
 
     const divOneHeader = document.createElement("math");
-    var x = document.createElement("mi");
-    divOneHeader.appendChild(x);
-    x.textContent = "x";
+   
+    var jsonEquations = fetch("Equation.json").then(response => response.json());
 
-    var equals = document.createElement("mo");
-    divOneHeader.appendChild(equals);
-    equals.textContent = "=";
-
-    var sub = document.createElement("msub");
-    divOneHeader.appendChild(sub);
-    sub.textContent = "0";
-
-    var acceleration = document.createElement("mi");
-    divOneHeader.appendChild(acceleration);
-    acceleration.textContent = "a";
-
-    var time = document.createElement("mi");
-    divOneHeader.appendChild(time);
-    time.textContent = "t";
-
-    var sup = document.createElement("sup");
-    divOneHeader.appendChild(sup);
-    sup.textContent = 2;
+    jsonEquations.then(result => {
+        var equations = new Array();
+        result.forEach(item => {
+            equations.push(new Equation(item));
+        })
+        return equations;
+    }).then(result => {
+      EquationToHTML(result[0], divOneHeader);
+    });
 
     this.divOne.appendChild(divOneHeader);
 
@@ -121,7 +122,6 @@ function drop(ev) {
   var data = ev.dataTransfer.getData("text");
   var draggedElement = document.getElementById(data);
   if (ev.target.className === "divOne") {
-    // Swap the positions of the dragged element and the target element
     ev.target.parentNode.insertBefore(draggedElement, ev.target.nextSibling);
   } else {
     ev.target.appendChild(draggedElement);

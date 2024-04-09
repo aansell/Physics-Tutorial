@@ -31,10 +31,9 @@ function OperationToString(operation, whereToPutIt) {
 }
 
 function EquationToString(e, parent) {
-    var math = document.createElement("math");
-    parent.appendChild(math);
-    var mathContainer = document.createElement("mrow");
-    math.append(mathContainer);
+    var mathContainer = document.createElement("math");
+    mathContainer.className = "equation";
+    parent.append(mathContainer);
 
     if(e.left instanceof Operation) {
     OperationToString(e.left, mathContainer);

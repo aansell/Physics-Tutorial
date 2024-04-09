@@ -74,9 +74,31 @@ class boxDiv {
     this.divOne.id = "equation1";
     this.variable.appendChild(this.divOne);
 
-    const divOneHeader = document.createElement("h3");
+    const divOneHeader = document.createElement("math");
+    var x = document.createElement("mi");
+    divOneHeader.appendChild(x);
+    x.textContent = "x";
 
-    divOneHeader.textContent = "x = x0 v0t + 1/2at^2";
+    var equals = document.createElement("mo");
+    divOneHeader.appendChild(equals);
+    equals.textContent = "=";
+
+    var sub = document.createElement("msub");
+    divOneHeader.appendChild(sub);
+    sub.textContent = "0";
+
+    var acceleration = document.createElement("mi");
+    divOneHeader.appendChild(acceleration);
+    acceleration.textContent = "a";
+
+    var time = document.createElement("mi");
+    divOneHeader.appendChild(time);
+    time.textContent = "t";
+
+    var sup = document.createElement("sup");
+    divOneHeader.appendChild(sup);
+    sup.textContent = 2;
+
     this.divOne.appendChild(divOneHeader);
 
     this.divOne.addEventListener("dragstart", drag);

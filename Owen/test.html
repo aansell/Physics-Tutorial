@@ -2,10 +2,17 @@
 <html>
 <head>
 
+  <title>Equation Test</title>
+
 <link rel="stylesheet" href="test.css"> <!-- Linking to external CSS file -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"> <!-- Linking to Google Fonts -->
 
+<script type="text/javascript"
+  src="https://d3eoax9i5htok0.cloudfront.net/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
+<script src = "Equation.js"></script>
+<script src = "EquationToHTML.js"></script>
 </head>
 <body>
 
@@ -13,7 +20,7 @@
         <mrow>
             <mi>v</mi>
             <mo>=</mo>
-            <mi>{delta}d</mi>
+            <mi>&Delta;d</mi>
             <mo>*</mo>
             <msup>
                 <mi>{delta}t</mi>
@@ -44,9 +51,6 @@
     </math>
 
     <script src = "DropdownPrefab.js"></script>
-    <script src = "Equation.js"></script>
-
-    <script src = "EquationToHTML.js"></script>
-
+    <script src = "FetchEquations.js"></script>
 </body>
 </html>

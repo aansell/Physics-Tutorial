@@ -7,5 +7,7 @@ jsonEquations.then(result => {
     })
     return equations;
 }).then(result => {
-    EquationToHTML(result[0], document.body);
+    result.forEach((eq) => {
+        EquationToHTML(eq, document.body);
+    });
 });

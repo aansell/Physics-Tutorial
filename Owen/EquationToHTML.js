@@ -1,6 +1,7 @@
 function FormatItem(item, whereToPutIt) {
     if(typeof(item) == "string") {
         var inBrackets = false;
+        var underscore = false;
         var contents = "";
         [...item].forEach((char) => {
             if(char == '}') {
@@ -14,15 +15,27 @@ function FormatItem(item, whereToPutIt) {
             if(char == '{') {
                 inBrackets = true;
             }
+
+            if(char == "_") {
+                underscore = true;
+            }
         });
 
         if(contents.toLowerCase() == "delta") {
             item = item.replace('{' + contents + '}', "Δ");
         }
 
-        var variableName = document.createElement("mi");
-        variableName.textContent = item;
-        whereToPutIt.appendChild(variableName);
+        if(underscore) {
+            var subscript = document.createElement("msub");
+            whereToPutIt.appendChild(subscript);
+            item = item.split("_");
+            FormatItem(item[0], subscript);
+            FormatItem(item[1], subscript);
+        } else {
+            var variableName = document.createElement("mi");
+            variableName.textContent = item;
+            whereToPutIt.appendChild(variableName);
+        }
     } else if(typeof(item) == "number") {
         var variableName = document.createElement("mn");
         variableName.textContent = item;
@@ -33,26 +46,45 @@ function FormatItem(item, whereToPutIt) {
 }
 
 function OperationToHTML(operation, whereToPutIt) {
-    var includeOperation;
+    var includeOperation = true;
+    var createFrac = false;
     if(operation.operation == "^") {
         var newParent = document.createElement("msup");
         whereToPutIt.appendChild(newParent);
         whereToPutIt = newParent;
         includeOperation = false;
-    } else {
+    }
+    if(operation.operation == "*") {
+        operation.content.forEach((term) => {
+            if(term instanceof Operation) {
+                if(term.operation = "^" && typeof(term.content[1]) == "number") {
+                    if(term.content[1] < 0) {
+                        createFrac = true;
+                    }
+                }
+            }
+        });
+        if(createFrac) {
+            // Do some stuff
+        }
+    }
+
+    if(includeOperation) {
         var newParent = document.createElement("mrow");
         whereToPutIt.appendChild(newParent);
         whereToPutIt = newParent;
-        includeOperation = true;
     }
+
+
+    var displayOp = operation.operation;
     if(operation.operation == "*") {
-        operation.operation = "•";
+        displayOp = "•";
     }
     
     operation.content.forEach((item, index) => {
         if(includeOperation && index != 0) {
             var operationOb = document.createElement("mo");
-            operationOb.textContent = operation.operation;
+            operationOb.textContent = displayOp;
             whereToPutIt.appendChild(operationOb);
         }
 

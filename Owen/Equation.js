@@ -7,7 +7,6 @@ class Operation {
         if(operObject instanceof Operation) return operObject;
 
         if(typeof operObject.operation != "string") throw new Error("Constructor for class Operation takes parameter operation as a string. Operation was not a string.");
-        this.operation = operObject.operation;
         if(!Array.isArray(operObject.content))  throw new Error("Constructor for class Operation takes parameter content as an array. Content was not an array.");
         
         if(operObject.operation == "-") {
@@ -18,7 +17,8 @@ class Operation {
             this.operation = "*";
             var second = {operation: "^", content: [operObject.content[1], -1]};
             this.content = [operObject.content[0], new Operation(second)];
-        } else if(operObject.operation == "+" || operObject.operation == "*" || operObject.operation == "^") {
+        } else if(operObject.operation == "+" || operObject.operation == "*" || operObject.operation == "^") {     
+            this.operation = operObject.operation;
             this.content = operObject.content;
         } else {
             throw new Error("Unrecognized operation passed to Operation constructor.");
@@ -28,7 +28,7 @@ class Operation {
             if(typeof item == "object") {
                 arr[index] = new Operation(item);
             }
-        })
+        });
     }
 }
 

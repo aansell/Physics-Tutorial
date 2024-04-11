@@ -1,4 +1,3 @@
-
 var jsonEquations = fetch("Equation.json").then(response => response.json());
 
 jsonEquations.then(result => {

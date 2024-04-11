@@ -33,12 +33,17 @@ function FormatItem(item, whereToPutIt) {
 }
 
 function OperationToHTML(operation, whereToPutIt) {
-    var includeOperation = true;
+    var includeOperation;
     if(operation.operation == "^") {
         var newParent = document.createElement("msup");
         whereToPutIt.appendChild(newParent);
         whereToPutIt = newParent;
         includeOperation = false;
+    } else {
+        var newParent = document.createElement("mrow");
+        whereToPutIt.appendChild(newParent);
+        whereToPutIt = newParent;
+        includeOperation = true;
     }
     if(operation.operation == "*") {
         operation.operation = "•";
@@ -60,7 +65,9 @@ function OperationToHTML(operation, whereToPutIt) {
 }
 
 function EquationToHTML(e, parent) {
-    var mathContainer = document.createElement("math");
+    if(!(e instanceof Equation)) throw Error("Variable of type Equaiton must be passed to parameter e of EquationToHTML().");
+
+    var mathContainer = document.createElementNS("http://www.w3.org/1998/Math/MathML", "math");
     mathContainer.classList.add("equation");
     parent.append(mathContainer);
 
@@ -79,5 +86,14 @@ function EquationToHTML(e, parent) {
     } else {
         FormatItem(e.right, mathContainer);
     }
+
+    MathJax.typesetPromise()
+        .catch((err) => console.log('MathJax typesetting failed: ' + err));
+
+    /*
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(parent);
+    });
+    */
 }
 

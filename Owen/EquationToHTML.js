@@ -57,16 +57,18 @@ function OperationToHTML(operation, whereToPutIt) {
     if(operation.operation == "*") {
         operation.content.forEach((term) => {
             if(term instanceof Operation) {
-                if(term.operation = "^" && typeof(term.content[1]) == "number") {
+                if(term.operation == "^" && typeof(term.content[1]) == "number") {
                     if(term.content[1] < 0) {
                         createFrac = true;
                     }
                 }
             }
         });
-        if(createFrac) {
-            // Do some stuff
-        }
+    }
+
+    if(createFrac) {
+        // Do some stuff
+        return;
     }
 
     if(includeOperation) {

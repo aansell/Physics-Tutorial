@@ -1,5 +1,7 @@
 function FormatItem(item, whereToPutIt) {
-    if(typeof(item) == "string") {
+    if(item instanceof Operation) {
+        OperationToHTML(item, whereToPutIt);
+    } else if(typeof(item) == "string") {
         var inBrackets = false;
         var underscore = false;
         var contents = "";
@@ -67,8 +69,33 @@ function OperationToHTML(operation, whereToPutIt) {
     }
 
     if(createFrac) {
-        // Do some stuff
-        return;
+        var fraction = document.createElement("mfrac");
+        whereToPutIt.appendChild(fraction);
+        var numerator = document.createElement("mrow");
+        fraction.appendChild(numerator);
+        var denominator = document.createElement("mrow");
+        fraction.appendChild(denominator);
+
+        operation.content.forEach((term) => {
+            var inDenominator = false;
+            if(term instanceof Operation) {
+                if(term.operation == "^" && typeof(term.content[1]) == "number") {
+                    if(term.content[1] < 0) {
+                        if(term.content[1] == -1) {
+                            FormatItem(term.content[0], denominator);
+                        } else {
+                            term.content[1] = Math.abs(term.content[1]);
+                            FormatItem(term, denominator);
+                        }
+                        inDenominator = true;
+                    }
+                }
+            }
+            if(!inDenominator) {
+                FormatItem(term, numerator);
+            }
+        });
+            return;
     }
 
     if(includeOperation) {
@@ -80,7 +107,7 @@ function OperationToHTML(operation, whereToPutIt) {
 
     var displayOp = operation.operation;
     if(operation.operation == "*") {
-        displayOp = "•";
+        displayOp = "";
     }
     
     operation.content.forEach((item, index) => {
@@ -90,11 +117,7 @@ function OperationToHTML(operation, whereToPutIt) {
             whereToPutIt.appendChild(operationOb);
         }
 
-        if(item instanceof Operation) {
-            OperationToHTML(item, whereToPutIt);
-        } else {
-            FormatItem(item, whereToPutIt);
-        }
+        FormatItem(item, whereToPutIt);
     })
 }
 
@@ -105,21 +128,13 @@ function EquationToHTML(e, parent) {
     mathContainer.classList.add("equation");
     parent.append(mathContainer);
 
-    if(e.left instanceof Operation) {
-        OperationToHTML(e.left, mathContainer);
-    } else {
-        FormatItem(e.left, mathContainer);
-    }
+    FormatItem(e.left, mathContainer);
 
     var operationOb = document.createElement("mo");
     operationOb.textContent = "=";
     mathContainer.appendChild(operationOb);
 
-    if(e.right instanceof Operation) {
-        OperationToHTML(e.right, mathContainer);
-    } else {
-        FormatItem(e.right, mathContainer);
-    }
+    FormatItem(e.right, mathContainer);
 
     MathJax.typesetPromise()
         .catch((err) => console.log('MathJax typesetting failed: ' + err));

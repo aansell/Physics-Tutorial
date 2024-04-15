@@ -1,0 +1,24 @@
+[
+    {
+        "text": "How long does it take an object traveling at a velocity of 3m/s to travel a distance of 27m?",
+        "equation": "eq1",
+        "knowns": [
+            {
+                "name": "{delta}d",
+                "units": "meters",
+                "value": 27
+            },
+            {
+                "name": "v",
+                "units": "m/s",
+                "value": 3
+            }
+        ],
+        "wants": [
+            {
+                "name": "{delta}t",
+                "units": "seconds"
+            }
+        ]
+    }
+]

@@ -30,16 +30,34 @@ class Operation {
             }
         });
     }
+
+    findInContent(item, replacement = null) {
+        this.content.forEach((term, index) => {
+            if(term instanceof Operation) {
+                var result = term.findInContent(item, replacement);
+                if(result) return true;
+            } else {
+                if(term == item) {
+                    if(replacement != null) {
+                        this.content[index] = replacement;
+                    }
+                    return true;
+                }
+            }
+        });
+        return false;
+    }
 }
 
 class Equation {
+    name;
     left;
     right;
 
     /* operator =
     equation should be a json object */
     constructor(equation) {
-        if(equation.operation != "=") throw new Error("First level of equation should be operator =");
+        this.name = equation.name;
         if(!Array.isArray(equation.content)) throw new Error("Equation content should be an array.");
 
         if(typeof equation.content[0] == "object") {
@@ -54,14 +72,10 @@ class Equation {
             this.right = equation.content[1];
         }
     }
+
+    findVariable(name, replacement = null) {
+        this.left.findInContent(name, replacement);
+        this.right.findInContent(name, replacement);
+        // Needs to return a bool
+    }
 }
-
-
-var jsonEquations = fetch("Equation.json").then(response => response.json());
-var equations = new Array();
-
-jsonEquations.then(result => {
-    result.forEach(item => {
-        equations.push(new Equation(item));
-    })
-});

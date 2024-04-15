@@ -16,6 +16,7 @@ class variableDiv {
 }
 */
 
+
 class dropBoxDiv {
   constructor(parent, headerText) {
     this.variable = document.createElement("div");
@@ -34,44 +35,56 @@ class dropBoxDiv {
 } 
 
 class equationDiv {
+  divOne;
+  variable;
+
+
   constructor(parent, headerText) {
     this.variable = document.createElement("div");
     this.variable.id = "equationBox";
     parent.appendChild(this.variable);
     this.addHeader(headerText);
 
+    for(var i=0; i < ; i++){
+      this.createEquation(i);
+    }
+  }
+
+  createEquation(iteration){
+    const divOneHeader = document.createElement("div");
+
     this.divOne = document.createElement("div");
     this.divOne.draggable = true;
     this.divOne.className = "divOne";
     this.divOne.id = "eqution0";
     this.variable.appendChild(this.divOne);
-
-    const divOneHeader = document.createElement("math");
-
-    var jsonEquations = fetch("Equation.json").then(response => response.json());
-
-    jsonEquations.then(result => {
-        var equations = new Array();
-        result.forEach(item => {
-            equations.push(new Equation(item));
-        })
-        return equations;
-    }).then(result => {
-      EquationToHTML(result[1], divOneHeader);
-    });
-
     this.divOne.appendChild(divOneHeader);
-
     this.divOne.addEventListener("dragstart", drag);
-
     this.variable.addEventListener("dragover", allowDrop);
     this.variable.addEventListener("drop", drop);
+    
+
+    parseFromJSON(divOneHeader, iteration);
+
   }
   addHeader(text) {
     const header = document.createElement("h3");
     header.textContent = text;
     this.variable.appendChild(header);
   }
+}
+
+function parseFromJSON(whereToPutIt, pos) {
+  var jsonEquations = fetch("Equation.json").then(response => response.json());
+    jsonEquations.then(result => {
+      var equations = new Array();
+        result.forEach(item => {
+            equations.push(new Equation(item));
+        })
+      return equations;
+    }).then(result => {
+      EquationToHTML(result[pos], whereToPutIt);
+    });
 }
 
 class boxDiv {
@@ -86,20 +99,8 @@ class boxDiv {
     this.divOne.id = "equation1";
     this.variable.appendChild(this.divOne);
 
-    const divOneHeader = document.createElement("math");
+    const divOneHeader = document.createElement("div");
    
-    var jsonEquations = fetch("Equation.json").then(response => response.json());
-
-    jsonEquations.then(result => {
-        var equations = new Array();
-        result.forEach(item => {
-            equations.push(new Equation(item));
-        })
-        return equations;
-    }).then(result => {
-      EquationToHTML(result[0], divOneHeader);
-    });
-
     this.divOne.appendChild(divOneHeader);
 
     this.divOne.addEventListener("dragstart", drag);

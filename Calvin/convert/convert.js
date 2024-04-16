@@ -3,52 +3,49 @@ function convert(value, valueConversion, wantConversion) {
 }
 
 function convertFormat(leftSide) {
-  let leftTop = 1;
-  let rightTop = 1;
-  unitDictionary[unitSelect.value].top.forEach((top) => {
-    leftTop *= conversionDictionary[top][leftSideUnit.value.split("/")[0]];
-    rightTop *= conversionDictionary[top][rightSideUnit.value.split("/")[0]];
-  });
-
-  let leftBottom = 1;
-  let rightBottom = 1;
-  unitDictionary[unitSelect.value].bottom.forEach((bottom) => {
-    leftBottom *=
-      conversionDictionary[bottom][leftSideUnit.value.split("/")[1]];
-    rightBottom *=
-      conversionDictionary[bottom][rightSideUnit.value.split("/")[1]];
-  });
-
-  let leftUnit = leftTop / leftBottom;
-  let rightUnit = rightTop / rightBottom;
   if (leftSide) {
     leftSideNumber.value = convert(
-      parseFloat(rightSideNumber.value),
-      rightUnit,
-      leftUnit
+      rightSideNumber.value,
+      rightSideUnit.value,
+      leftSideUnit.value
     );
     if (leftSideNumber.value == "NaN") {
-      leftSideNumber.value = "";
+      leftSideNumber.value = "Error";
     }
   } else {
     rightSideNumber.value = convert(
-      parseFloat(leftSideNumber.value),
-      leftUnit,
-      rightUnit
+      leftSideNumber.value,
+      leftSideUnit.value,
+      rightSideUnit.value
     );
     if (rightSideNumber.value == "NaN") {
-      rightSideNumber.value = "";
+      rightSideNumber.value = "Error";
     }
+    // clean up floating point error test
+    rightSideNumber.value = parseFloat(
+      rightSideNumber.value.split("0000000")[0]
+    );
   }
 }
 
+class Unit {
+  constructor(m, s, kg) {
+    this.distance = m;
+    this.time = s;
+    this.mass = kg;
+  }
+}
+
+const unitList = {
+  distance: new Unit(1, 0, 0),
+  time: new Unit(0, 1, 0),
+  mass: new Unit(0, 0, 1),
+  speed: new Unit(1, -1, 0),
+  density: new Unit(-3, 0, 1),
+  hertz: new Unit(0, -1, 0),
+};
+
 const conversionDictionary = {
-  "": { "": 1 },
-  time: {
-    hour: 3600,
-    minute: 60,
-    second: 1,
-  },
   distance: {
     mile: 1609.344,
     kilometer: 1000,
@@ -58,6 +55,14 @@ const conversionDictionary = {
     centimeter: 0.01,
     millimeter: 0.001,
   },
+  time: {
+    hour: 3600,
+    minute: 60,
+    second: 1,
+    millisecond: 0.001,
+    microsecond: 0.000001,
+    nanosecond: 0.000000001,
+  },
   mass: {
     ton: 907184.74,
     kilogram: 1000,
@@ -65,34 +70,6 @@ const conversionDictionary = {
     ounce: 28.349523125,
     gram: 1,
     milligram: 0.001,
-  },
-};
-
-const unitDictionary = {
-  time: {
-    top: ["time"],
-    bottom: [""],
-  },
-
-  distance: {
-    top: ["distance"],
-    bottom: [""],
-  },
-
-  mass: {
-    top: ["mass"],
-    bottom: [""],
-  },
-
-  speed: {
-    top: ["distance"],
-    bottom: ["time"],
-  },
-
-  // broken
-  density: {
-    top: ["mass"],
-    bottom: ["distance", "distance", "distance"],
   },
 };
 
@@ -108,38 +85,54 @@ const rightSide = equation.querySelector(".right-side");
 const rightSideNumber = rightSide.querySelector(".number-input");
 const rightSideUnit = rightSide.querySelector(".right-side-unit");
 
-for (let key in unitDictionary) {
-  unitSelect.insertAdjacentHTML(
-    "beforeend",
-    `<option value="${key}">${key}</option>`
-  );
-}
-
 function setUnitSelect(unitSelected) {
   leftSideUnit.innerHTML = "";
   rightSideUnit.innerHTML = "";
 
-  for (let top in conversionDictionary[unitSelected.top]) {
-    for (let bottom in conversionDictionary[unitSelected.bottom]) {
-      console.log(top, bottom);
-      let displayValue = top;
-      if (bottom !== "") {
-        displayValue = `${top} per ${bottom}`;
+  for (let distanceUnit in conversionDictionary.distance) {
+    for (let timeUnit in conversionDictionary.time) {
+      for (let massUnit in conversionDictionary.mass) {
+        let displayValue = "";
+        if (unitSelected.distance !== 0) {
+          displayValue += `${distanceUnit}^${unitSelected.distance} `;
+        }
+        if (unitSelected.time !== 0) {
+          displayValue += `${timeUnit}^${unitSelected.time} `;
+        }
+        if (unitSelected.mass !== 0) {
+          displayValue += `${massUnit}^${unitSelected.mass}`;
+        }
+        const value =
+          Math.pow(
+            conversionDictionary.distance[distanceUnit],
+            unitSelected.distance
+          ) *
+          Math.pow(conversionDictionary.time[timeUnit], unitSelected.time) *
+          Math.pow(conversionDictionary.mass[massUnit], unitSelected.mass);
+        leftSideUnit.insertAdjacentHTML(
+          "beforeend",
+          `<option value="${value}">${displayValue}</option>`
+        );
+        rightSideUnit.insertAdjacentHTML(
+          "beforeend",
+          `<option value="${value}">${displayValue}</option>`
+        );
+        if (unitSelected.mass === 0) {
+          break;
+        }
       }
-      leftSideUnit.insertAdjacentHTML(
-        "beforeend",
-        `<option value="${top}/${bottom}">${displayValue}</option>`
-      );
-      rightSideUnit.insertAdjacentHTML(
-        "beforeend",
-        `<option value="${top}/${bottom}">${displayValue}</option>`
-      );
+      if (unitSelected.time === 0) {
+        break;
+      }
+    }
+    if (unitSelected.distance === 0) {
+      break;
     }
   }
 }
 
 unitSelect.addEventListener("change", () => {
-  setUnitSelect(unitDictionary[unitSelect.value]);
+  setUnitSelect(unitList[unitSelect.value]);
   convertFormat(false);
 });
 
@@ -159,4 +152,11 @@ rightSideUnit.addEventListener("change", () => {
   convertFormat(false);
 });
 
-setUnitSelect(unitDictionary.time);
+for (let key in unitList) {
+  unitSelect.insertAdjacentHTML(
+    "beforeend",
+    `<option value="${key}">${key}</option>`
+  );
+}
+
+setUnitSelect(unitList.distance);

@@ -15,26 +15,29 @@ body {
   padding: 50px;
   }
 
-  .divOne {
-    display: flex;
-    width: 80%;
-    height: 26px;
-    border: 1px solid #555;
-    background-color: #888;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    border-radius: 1rem;
-    margin: .5rem;
+.divOne {
+  display: flex;
+  width: 80%;
+  height: 26px;
+  border: 1px solid #555;
+  background-color: #888;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 1rem;
+  margin: .5rem;
   }
 
-  .equation {
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-    letter-spacing: 2px; 
+.divHeading{
+    margin-top: 0px;
+  }
+.equation {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  letter-spacing: 2px; 
   }
   
-.variableDiv{
+.variableDiv {
   width: 100%;
   text-align: center;
   border: 1px solid orange;
@@ -43,7 +46,8 @@ body {
   text-decoration: none;
   padding: auto;
   }
-.container{
+
+.container {
   position: relative;
   vertical-align: top;
   width: 100%;

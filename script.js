@@ -186,6 +186,7 @@ var parentBoxDiv = document.getElementById("main-content")
 new dropBoxDiv(parentBoxDiv, "Knowns");
 new dropBoxDiv(parentBoxDiv, "Unknowns");
 new equationDiv(parentDiv, "Equations");
+new dropBoxDiv(parentDiv, "Knowns and Unknowns")
 //new boxDiv(parentBoxDiv);
 }
 

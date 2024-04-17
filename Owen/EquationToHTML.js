@@ -1,3 +1,5 @@
+import { Equation, Operation } from "./Equation.js";
+
 function FormatItem(item, whereToPutIt) {
     if(item instanceof Operation) {
         OperationToHTML(item, whereToPutIt);
@@ -121,20 +123,20 @@ function OperationToHTML(operation, whereToPutIt) {
     })
 }
 
-function EquationToHTML(e, parent) {
-    if(!(e instanceof Equation)) throw Error("Variable of type Equaiton must be passed to parameter e of EquationToHTML().");
+export function EquationToHTML(equation, parent) {
+    if(!(equation instanceof Equation)) throw Error("Variable of type Equaiton must be passed to parameter e of EquationToHTML().");
 
     var mathContainer = document.createElementNS("http://www.w3.org/1998/Math/MathML", "math");
     mathContainer.classList.add("equation");
     parent.append(mathContainer);
 
-    FormatItem(e.left, mathContainer);
+    FormatItem(equation.left, mathContainer);
 
     var operationOb = document.createElement("mo");
     operationOb.textContent = "=";
     mathContainer.appendChild(operationOb);
 
-    FormatItem(e.right, mathContainer);
+    FormatItem(equation.right, mathContainer);
 
     MathJax.typesetPromise()
         .catch((err) => console.log('MathJax typesetting failed: ' + err));

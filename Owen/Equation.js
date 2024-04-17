@@ -1,4 +1,4 @@
-class Operation {
+export class Operation {
     operation;
     content;
 
@@ -49,7 +49,7 @@ class Operation {
     }
 }
 
-class Equation {
+export class Equation {
     name;
     left;
     right;

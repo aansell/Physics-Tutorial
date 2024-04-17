@@ -42,6 +42,33 @@ class equationJSON {
   }
 }
 
+class problemsJSON{
+  problems;
+
+  constructor() {
+    var jsonProblems = fetch("problems.json").then(response => response.json());
+    this.problems = jsonProblems.then((result) => {
+      var problems = new Array();
+      result.forEach(item => {
+        problems.push(new Problem(item));
+      })
+      return problems;
+    });
+  }
+
+    async size() {
+      return this.problems.then((result) => {
+        return result.length;
+      });
+    }
+    
+    async addToHTML(index, whereToPutIt) {
+      this.problems.then((result) => {
+        ProblemToHTML(result[index], whereToPutIt);
+      });
+    }
+}
+
 class dropBoxDiv {
   constructor(parent, headerText) {
     this.variable = document.createElement("div");
@@ -186,6 +213,7 @@ var parentBoxDiv = document.getElementById("main-content")
 new dropBoxDiv(parentBoxDiv, "Knowns");
 new dropBoxDiv(parentBoxDiv, "Unknowns");
 new equationDiv(parentDiv, "Equations");
+new dropBoxDiv(parentDiv, "Knowns and Unknowns")
 //new boxDiv(parentBoxDiv);
 }
 

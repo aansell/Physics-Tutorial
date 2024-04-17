@@ -15,7 +15,32 @@ class variableDiv {
   }
 }
 */
+class equationJSON {
+  equations;
 
+  constructor() {
+    var jsonEquations = fetch("Equation.json").then(response => response.json());
+    this.equations = jsonEquations.then((result) => {
+      var equations = new Array();
+        result.forEach(item => {
+            equations.push(new Equation(item));
+        })
+      return equations;
+    });
+  }
+
+  async size() {
+    return this.equations.then((result) => {
+      return result.length;
+    });
+  }
+
+  async addToHTML(index, whereToPutIt) {
+    this.equations.then((result) => {
+      EquationToHTML(result[index], whereToPutIt);
+    });
+  }
+}
 
 class dropBoxDiv {
   constructor(parent, headerText) {
@@ -38,6 +63,8 @@ class equationDiv {
   divOne;
   variable;
 
+  equations;
+
 
   constructor(parent, headerText) {
     this.variable = document.createElement("div");
@@ -45,7 +72,15 @@ class equationDiv {
     parent.appendChild(this.variable);
     this.addHeader(headerText);
 
-    for(var i=0; i < ; i++){
+    this.addAllEquations();
+  }
+
+  async addAllEquations() {
+    this.equations = new equationJSON;
+
+    const equationLength = await this.equations.size();
+    console.log(equationLength);
+    for(var i = 0; i < equationLength; i++){
       this.createEquation(i);
     }
   }
@@ -56,7 +91,7 @@ class equationDiv {
     this.divOne = document.createElement("div");
     this.divOne.draggable = true;
     this.divOne.className = "divOne";
-    this.divOne.id = "eqution0";
+    this.divOne.id = "equation0";
     this.variable.appendChild(this.divOne);
     this.divOne.appendChild(divOneHeader);
     this.divOne.addEventListener("dragstart", drag);
@@ -64,7 +99,7 @@ class equationDiv {
     this.variable.addEventListener("drop", drop);
     
 
-    parseFromJSON(divOneHeader, iteration);
+    this.equations.addToHTML(iteration, divOneHeader);
 
   }
   addHeader(text) {
@@ -74,41 +109,20 @@ class equationDiv {
   }
 }
 
-function parseFromJSON(whereToPutIt, pos) {
-  var jsonEquations = fetch("Equation.json").then(response => response.json());
-    jsonEquations.then(result => {
-      var equations = new Array();
-        result.forEach(item => {
-            equations.push(new Equation(item));
-        })
-      return equations;
-    }).then(result => {
-      EquationToHTML(result[pos], whereToPutIt);
-    });
-}
-
+/*
 class boxDiv {
   constructor(parent) {
     this.variable = document.createElement("div");
     parent.appendChild(this.variable);
     this.variable.id = "mainEquationBox";
     
-    this.divOne = document.createElement("div");
-    this.divOne.draggable = true;
-    this.divOne.className = "divOne";
-    this.divOne.id = "equation1";
-    this.variable.appendChild(this.divOne);
-
     const divOneHeader = document.createElement("div");
    
-    this.divOne.appendChild(divOneHeader);
-
-    this.divOne.addEventListener("dragstart", drag);
-
     this.variable.addEventListener("dragover", allowDrop);
     this.variable.addEventListener("drop", drop);
   }
 }
+*/
 
 function allowDrop(ev) {
   ev.preventDefault();
@@ -169,10 +183,10 @@ function togglePanel() {
 function createDropBox() {
 var parentDiv = document.getElementById("panel-content");
 var parentBoxDiv = document.getElementById("main-content")
-new dropBoxDiv(parentDiv, "Knowns");
-new dropBoxDiv(parentDiv, "Unknowns");
+new dropBoxDiv(parentBoxDiv, "Knowns");
+new dropBoxDiv(parentBoxDiv, "Unknowns");
 new equationDiv(parentDiv, "Equations");
-new boxDiv(parentBoxDiv);
+//new boxDiv(parentBoxDiv);
 }
 
 

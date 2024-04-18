@@ -2,28 +2,21 @@ function convert(value, valueConversion, wantConversion) {
   return (value * valueConversion) / wantConversion;
 }
 
+function cleanUpValue(value) {
+  if (value == "NaN") {
+    return "Error";
+  }
+  return value;
+}
+
 function convertFormat(leftSide) {
   if (leftSide) {
-    leftSideNumber.value = convert(
-      rightSideNumber.value,
-      rightSideUnit.value,
-      leftSideUnit.value
+    leftSideNumber.value = cleanUpValue(
+      convert(rightSideNumber.value, rightSideUnit.value, leftSideUnit.value)
     );
-    if (leftSideNumber.value == "NaN") {
-      leftSideNumber.value = "Error";
-    }
   } else {
-    rightSideNumber.value = convert(
-      leftSideNumber.value,
-      leftSideUnit.value,
-      rightSideUnit.value
-    );
-    if (rightSideNumber.value == "NaN") {
-      rightSideNumber.value = "Error";
-    }
-    // clean up floating point error test
-    rightSideNumber.value = parseFloat(
-      rightSideNumber.value.split("0000000")[0]
+    rightSideNumber.value = cleanUpValue(
+      convert(leftSideNumber.value, leftSideUnit.value, rightSideUnit.value)
     );
   }
 }
@@ -64,12 +57,12 @@ const conversionDictionary = {
     nanosecond: 0.000000001,
   },
   mass: {
-    ton: 907184.74,
-    kilogram: 1000,
-    pound: 453.59237,
-    ounce: 28.349523125,
-    gram: 1,
-    milligram: 0.001,
+    ton: 907.18474,
+    kilogram: 1,
+    pound: 0.45359237,
+    ounce: 0.028349523125,
+    gram: 0.001,
+    milligram: 0.000001,
   },
 };
 

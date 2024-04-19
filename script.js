@@ -1,3 +1,6 @@
+import { Equation } from "./Owen/Equation.js";
+import { EquationToHTML } from "./Owen/EquationToHTML.js";
+
 /*
 class variableDiv {
   constructor(parent, name, value) {
@@ -42,32 +45,7 @@ class equationJSON {
   }
 }
 
-class problemsJSON{
-  problems;
 
-  constructor() {
-    var jsonProblems = fetch("problems.json").then(response => response.json());
-    this.problems = jsonProblems.then((result) => {
-      var problems = new Array();
-      result.forEach(item => {
-        problems.push(new Problem(item));
-      })
-      return problems;
-    });
-  }
-
-    async size() {
-      return this.problems.then((result) => {
-        return result.length;
-      });
-    }
-    
-    async addToHTML(index, whereToPutIt) {
-      this.problems.then((result) => {
-        ProblemToHTML(result[index], whereToPutIt);
-      });
-    }
-}
 
 class dropBoxDiv {
   constructor(parent, headerText) {

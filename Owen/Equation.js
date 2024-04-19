@@ -74,8 +74,11 @@ export class Equation {
     }
 
     findVariable(name, replacement = null) {
-        this.left.findInContent(name, replacement);
-        this.right.findInContent(name, replacement);
-        // Needs to return a bool
+        var success = this.left.findInContent(name, replacement);
+        if(success) {
+            return true;
+        }
+        success = this.right.findInContent(name, replacement);
+        return success;
     }
 }

@@ -6,11 +6,10 @@ var jsonEquations = fetch("Equation.json").then(response => response.json());
 jsonEquations.then(result => {
     var equations = new Array();
     result.forEach(item => {
-        equations.push(new Equation(item));
-    });
-    return equations;
-}).then(result => {
-    result.forEach((eq) => {
+        var eq = new Equation(item);
+        var result = eq.findVariable("{delta}d", "d");
+        console.log(result);
+        equations.push(eq);
         EquationToHTML(eq, document.body);
     });
 });

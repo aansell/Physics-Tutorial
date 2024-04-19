@@ -1,7 +1,3 @@
-
-
-
-
 export class dropBoxDiv {
   constructor(parent, headerText) {
     this.variable = document.createElement("div");
@@ -22,12 +18,12 @@ export class dropBoxDiv {
 export class Draggable {
   container;
 
-  constructor(parent) {
+  constructor(id, parent) {
 
     this.container = document.createElement("div");
     this.container.draggable = true;
-    this.container.className = "divOne";
-    this.container.classList.add("equation0");
+    this.container.classList.add("divOne");
+    this.container.id = id;
 
     parent.appendChild(this.container);
     this.container.addEventListener("dragstart", drag);
@@ -65,30 +61,14 @@ function drop(ev) {
   ev.preventDefault();
   var data = ev.dataTransfer.getData("text");
   var draggedElement = document.getElementById(data);
-  if (ev.target.className === "divOne") {
+  if (ev.target.classList.contains("divOne")) {
     ev.target.parentNode.insertBefore(draggedElement, ev.target.nextSibling);
-  } else {
+  } else if(draggedElement instanceof HTMLDivElement) {
     ev.target.appendChild(draggedElement);
+  } else {
+    console.log(draggedElement);
+    throw Error("Couldn't find dragged element.");
   }
 }
 
-
-
-document.getElementById("toggle-btn").addEventListener("click", togglePanel);
-
-function togglePanel() {
-  var panel = document.getElementById("side-panel"); // Get reference to the side panel
-  var icon = document.getElementById("toggle-icon"); // Get reference to the toggle button icon
-  var toggleBtn = document.getElementById("toggle-btn"); // Get reference to the toggle button
-
-  panel.classList.toggle("open"); // Toggle the 'open' class of the side panel
-
-  if (panel.classList.contains("open")) { // If the panel is open
-    icon.innerHTML = "arrow_back_ios"; // Change the icon to 'arrow_back_ios'
-    toggleBtn.style.right = "77%"; // Move button to the right when panel is open
-  } else { // If the panel is closed
-    icon.innerHTML = "arrow_forward_ios"; // Change the icon to 'arrow_forward_ios'
-    toggleBtn.style.right = "97%"; // Move button back to original position
-  }
-}
 

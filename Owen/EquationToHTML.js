@@ -155,7 +155,7 @@ export class equationJSON {
     
         var mathContainer = document.createElementNS("http://www.w3.org/1998/Math/MathML", "math");
         mathContainer.classList.add("equation");
-        parent.append(mathContainer);
+        parent.appendChild(mathContainer);
     
         this.#FormatItem(equation.left, mathContainer);
     

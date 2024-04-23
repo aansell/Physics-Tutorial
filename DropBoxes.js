@@ -1,29 +1,38 @@
 export class dropBoxDiv {
+  htmlElement;
+
   constructor(parent, headerText) {
-    this.variable = document.createElement("div");
-    this.variable.id = "text-container";
-    this.variable.className = "dropbox";
-    parent.appendChild(this.variable);
+    this.htmlElement = document.createElement("div");
+    this.htmlElement.id = "text-container";
+    this.htmlElement.className = "dropbox";
+    parent.appendChild(this.htmlElement);
     this.addHeader(headerText);
-    this.variable.addEventListener("dragover", allowDrop); // Use "dragover" without "on"
-    this.variable.addEventListener("drop", drop); // Use "drop" without "on"
+    this.htmlElement.addEventListener("dragover", allowDrop); // Use "dragover" without "on"
+    this.htmlElement.addEventListener("drop", drop); // Use "drop" without "on"
   }
   addHeader(text) {
     const header = document.createElement("h3");
     header.textContent = text;
-    this.variable.appendChild(header);
+    this.htmlElement.appendChild(header);
   }
 }
 
 export class Draggable {
   container;
 
-  constructor(id, parent) {
+  constructor(id, parent, classes) {
 
     this.container = document.createElement("div");
     this.container.draggable = true;
-    this.container.classList.add("divOne");
     this.container.id = id;
+
+    if(classes instanceof Array) {
+      classes.forEach(className => {
+        this.container.classList.add(className);
+      });
+    } else {
+      this.container.classList.add(classes);
+    }
 
     parent.appendChild(this.container);
     this.container.addEventListener("dragstart", drag);

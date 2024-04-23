@@ -1,15 +1,22 @@
-class problemsJSON{
+import { dropBoxDiv, Draggable } from "./DropBoxes.js";
+
+export class problemsJSON{
     problems;
+    knowsBox;
+    wantsBox;
   
-    constructor() {
-      var jsonProblems = fetch("problems.json").then(response => response.json());
-      this.problems = jsonProblems.then((result) => {
-        var problems = new Array();
-        result.forEach(item => {
-          problems.push(new Problem(item));
-        })
-        return problems;
-      });
+    constructor(whereToPutIt) {
+        this.knowsBox = new dropBoxDiv(whereToPutIt, "Knows");
+        this.wantsBox = new dropBoxDiv(whereToPutIt, "Unknowns");
+
+        var jsonProblems = fetch("./Owen/Problems.json").then(response => response.json());
+        this.problems = jsonProblems.then((result) => {
+            var problems = new Array();
+            result.forEach(item => {
+                problems.push(new Problem(item, this.knowsBox.htmlElement, this.wantsBox.htmlElement));
+            });
+            return problems;
+        });
     }
   
     async size() {
@@ -17,31 +24,47 @@ class problemsJSON{
             return result.length;
         });
     }
-  }
+}
 
 export class Problem {
     text;
     equation;
     knows;
     wants;
+    knowsElement;
+    wantsElement;
 
-    constructor(problemObject) {
+    constructor(problemObject, knowsContainer, wantsContainer) {
         this.text = problemObject.text;        
         this.equation = problemObject.equation;
-        for (var i =0; i<variables.length; i++) {
-            if(variables[i].value != null){
-                this.knows = variables[i].name;
-                populateVariables(this.knows, true, "text-container");
+        this.knows = new Array;
+        this.wants = new Array;
+        this.knowsElement = knowsContainer;
+        this.wantsElement = wantsContainer;
+        for (var i = 0; i < problemObject.variables.length; i++) {
+            if(problemObject.variables[i].value != null){
+                var name = problemObject.variables[i].name;
+                this.knows.push(name);
+                this.populateKnows(name);
             } else {
-                this.wants = variables[i].name;
+                var name = problemObject.variables[i].name;
+                this.wants.push(name);
+                this.populateWants(name);
             }
         }
-        console.log(this.knows + "knows");
-        console.log(this.wants + "wants");
     }
-}
 
-function populateVariables(variable, bool, parent) {
-    new variable = document.createElement(div);
-    
+    populateKnows(value) {
+        var dragContainer = new Draggable("var" + value, this.knowsElement, "knowsWants");
+        var variable = document.createElement("div");
+        dragContainer.container.appendChild(variable);
+        variable.innerHTML = value;
+    }
+
+    populateWants(value) {
+        var variable = document.createElement("div");
+        this.wantsElement.appendChild(variable);
+        variable.classList.add("knowsWants");
+        variable.innerHTML = value;
+    }
 }

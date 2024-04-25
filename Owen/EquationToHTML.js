@@ -1,3 +1,4 @@
+import { problemsJSON } from "../ProblemToHTML.js";
 import { Equation, Operation } from "./Equation.js";
 
 
@@ -27,7 +28,7 @@ export class equationJSON {
       });
     }
 
-    #FormatItem(item, whereToPutIt) {
+    static FormatItem(item, whereToPutIt) {
         if(item instanceof Operation) {
             this.#OperationToHTML(item, whereToPutIt);
         } else if(typeof(item) == "string") {
@@ -60,8 +61,8 @@ export class equationJSON {
                 var subscript = document.createElement("msub");
                 whereToPutIt.appendChild(subscript);
                 item = item.split("_");
-                this.#FormatItem(item[0], subscript);
-                this.#FormatItem(item[1], subscript);
+                this.FormatItem(item[0], subscript);
+                this.FormatItem(item[1], subscript);
             } else {
                 var variableName = document.createElement("mi");
                 variableName.textContent = item;
@@ -76,7 +77,7 @@ export class equationJSON {
         }
     }
     
-    #OperationToHTML(operation, whereToPutIt) {
+    static #OperationToHTML(operation, whereToPutIt) {
         var includeOperation = true;
         var createFrac = false;
         if(operation.operation == "^") {
@@ -111,17 +112,17 @@ export class equationJSON {
                     if(term.operation == "^" && typeof(term.content[1]) == "number") {
                         if(term.content[1] < 0) {
                             if(term.content[1] == -1) {
-                                this.#FormatItem(term.content[0], denominator);
+                                this.FormatItem(term.content[0], denominator);
                             } else {
                                 term.content[1] = Math.abs(term.content[1]);
-                                this.#FormatItem(term, denominator);
+                                this.FormatItem(term, denominator);
                             }
                             inDenominator = true;
                         }
                     }
                 }
                 if(!inDenominator) {
-                    this.#FormatItem(term, numerator);
+                    this.FormatItem(term, numerator);
                 }
             });
                 return;
@@ -146,28 +147,39 @@ export class equationJSON {
                 whereToPutIt.appendChild(operationOb);
             }
     
-            this.#FormatItem(item, whereToPutIt);
+            this.FormatItem(item, whereToPutIt);
         })
+    }
+
+    static createMathML(whereToPutIt) {
+        var mathContainer = document.createElementNS("http://www.w3.org/1998/Math/MathML", "math");
+        mathContainer.classList.add("equation");
+        whereToPutIt.appendChild(mathContainer);
+
+        return mathContainer;
     }
     
     #EquationToHTML(equation, parent) {
         if(!(equation instanceof Equation)) throw Error("Variable of type Equaiton must be passed to parameter e of EquationToHTML().");
     
+        /*
         var mathContainer = document.createElementNS("http://www.w3.org/1998/Math/MathML", "math");
         mathContainer.classList.add("equation");
         parent.appendChild(mathContainer);
+        */
+        var mathContainer = equationJSON.createMathML(parent);
     
-        this.#FormatItem(equation.left, mathContainer);
+        equationJSON.FormatItem(equation.left, mathContainer);
     
         var operationOb = document.createElement("mo");
         operationOb.textContent = "=";
         mathContainer.appendChild(operationOb);
     
-        this.#FormatItem(equation.right, mathContainer);
-    
+        equationJSON.FormatItem(equation.right, mathContainer);
+
+
         MathJax.typesetPromise()
             .catch((err) => console.log('MathJax typesetting failed: ' + err));
-    
         /*
         document.addEventListener("DOMContentLoaded", function() {
             renderMathInElement(parent);

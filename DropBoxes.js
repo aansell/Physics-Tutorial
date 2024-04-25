@@ -7,8 +7,8 @@ export class dropBoxDiv {
     this.htmlElement.className = "dropbox";
     parent.appendChild(this.htmlElement);
     this.addHeader(headerText);
-    this.htmlElement.addEventListener("dragover", allowDrop); // Use "dragover" without "on"
-    this.htmlElement.addEventListener("drop", drop); // Use "drop" without "on"
+    this.htmlElement.addEventListener("dragover", allowDrop);
+    this.htmlElement.addEventListener("drop", drop); 
   }
   addHeader(text) {
     const header = document.createElement("h3");
@@ -19,12 +19,13 @@ export class dropBoxDiv {
 
 export class Draggable {
   container;
-
-  constructor(id, parent, classes) {
+  
+  constructor(id, parent, classes, array) {
 
     this.container = document.createElement("div");
     this.container.draggable = true;
     this.container.id = id;
+    var allowedContain
 
     if(classes instanceof Array) {
       classes.forEach(className => {
@@ -35,28 +36,12 @@ export class Draggable {
     }
 
     parent.appendChild(this.container);
+
     this.container.addEventListener("dragstart", drag);
     this.container.addEventListener("dragover", allowDrop);
     this.container.addEventListener("drop", drop);
   }
 }
-
-
-
-/*
-class boxDiv {
-  constructor(parent) {
-    this.variable = document.createElement("div");
-    parent.appendChild(this.variable);
-    this.variable.id = "mainEquationBox";
-    
-    const divOneHeader = document.createElement("div");
-   
-    this.variable.addEventListener("dragover", allowDrop);
-    this.variable.addEventListener("drop", drop);
-  }
-}
-*/
 
 function allowDrop(ev) {
   ev.preventDefault();
@@ -70,14 +55,11 @@ function drop(ev) {
   ev.preventDefault();
   var data = ev.dataTransfer.getData("text");
   var draggedElement = document.getElementById(data);
-  if (ev.target.classList.contains("divOne")) {
     ev.target.parentNode.insertBefore(draggedElement, ev.target.nextSibling);
-  } else if(draggedElement instanceof HTMLDivElement) {
+    if(draggedElement instanceof HTMLDivElement) {
     ev.target.appendChild(draggedElement);
   } else {
     console.log(draggedElement);
     throw Error("Couldn't find dragged element.");
   }
 }
-
-

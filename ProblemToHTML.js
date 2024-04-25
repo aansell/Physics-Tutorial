@@ -1,4 +1,5 @@
 import { dropBoxDiv, Draggable } from "./DropBoxes.js";
+import { equationJSON } from "./Owen/EquationToHTML.js";
 
 export class problemsJSON{
     problems;
@@ -55,16 +56,22 @@ export class Problem {
     }
 
     populateKnows(value) {
-        var dragContainer = new Draggable("var" + value, this.knowsElement, "knowsWants");
-        var variable = document.createElement("div");
-        dragContainer.container.appendChild(variable);
-        variable.innerHTML = value;
+        var dragContainer = new Draggable("mathvar" + value, this.knowsElement, "knowsWants");
+        // Create MathML Element
+        var mathContainer = equationJSON.createMathML(dragContainer.container);
+        equationJSON.FormatItem(value, mathContainer);
+        MathJax.typesetPromise()
+            .catch((err) => console.log('MathJax typesetting failed: ' + err));
     }
 
     populateWants(value) {
         var variable = document.createElement("div");
-        this.wantsElement.appendChild(variable);
         variable.classList.add("knowsWants");
-        variable.innerHTML = value;
+        this.wantsElement.appendChild(variable);
+        var mathContainer = equationJSON.createMathML(variable);
+        equationJSON.FormatItem(value, mathContainer);
+        
+        MathJax.typesetPromise()
+            .catch((err) => console.log('MathJax typesetting failed: ' + err));
     }
 }

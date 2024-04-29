@@ -5,7 +5,7 @@ export class problemsJSON{
     problems;
     knowsBox;
     wantsBox;
-  
+
     constructor(whereToPutIt) {
         this.knowsBox = new dropBoxDiv(whereToPutIt, "Knows");
         this.wantsBox = new dropBoxDiv(whereToPutIt, "Unknowns");
@@ -14,7 +14,7 @@ export class problemsJSON{
         this.problems = jsonProblems.then((result) => {
             var problems = new Array();
             result.forEach(item => {
-                problems.push(new Problem(item, this.knowsBox.htmlElement, this.wantsBox.htmlElement));
+                problems.push(new Problem(item, this.knowsBox, this.wantsBox));
             });
             return problems;
         });
@@ -34,41 +34,52 @@ export class Problem {
     wants;
     knowsElement;
     wantsElement;
+    dragContainer;
+    variable;
 
     constructor(problemObject, knowsContainer, wantsContainer) {
-        this.text = problemObject.text;        
-        this.equation = problemObject.equation;
-        this.knows = new Array;
-        this.wants = new Array;
-        this.knowsElement = knowsContainer;
-        this.wantsElement = wantsContainer;
-        for (var i = 0; i < problemObject.variables.length; i++) {
-            if(problemObject.variables[i].value != null){
-                var name = problemObject.variables[i].name;
-                this.knows.push(name);
-                this.populateKnows(name);
-            } else {
-                var name = problemObject.variables[i].name;
-                this.wants.push(name);
-                this.populateWants(name);
+        if(knowsContainer instanceof dropBoxDiv && wantsContainer instanceof dropBoxDiv) {
+            this.text = problemObject.text;        
+            this.equation = problemObject.equation;
+            this.knows = new Array;
+            this.wants = new Array;
+
+            knowsContainer.addDraggableClass("knows");
+            this.knowsElement = knowsContainer.htmlElement;
+            this.wantsElement = wantsContainer.htmlElement;
+
+            for (var i = 0; i < problemObject.variables.length; i++) {
+                if(problemObject.variables[i].value != null){
+                    var name = problemObject.variables[i].name;
+                    this.knows.push(name);
+                    this.populateKnows(name);
+                } else {
+                    var name = problemObject.variables[i].name;
+                    this.wants.push(name);
+                    this.populateWants(name);
+                }
             }
+        } else {
+            throw Error("Knows container or wants container not of type dropBoxDiv.");
         }
     }
 
     populateKnows(value) {
-        var dragContainer = new Draggable("mathvar" + value, this.knowsElement, "knowsWants");
+        this.dragContainer = new Draggable("mathvar" + value, this.knowsElement, ["knowsWants", "knows"]);
         // Create MathML Element
-        var mathContainer = equationJSON.createMathML(dragContainer.container);
+        var mathContainer = equationJSON.createMathML(this.dragContainer.htmlElement);
         equationJSON.FormatItem(value, mathContainer);
         MathJax.typesetPromise()
             .catch((err) => console.log('MathJax typesetting failed: ' + err));
     }
 
     populateWants(value) {
-        var variable = document.createElement("div");
-        variable.classList.add("knowsWants");
-        this.wantsElement.appendChild(variable);
-        var mathContainer = equationJSON.createMathML(variable);
+        this.variable = document.createElement("div");
+        this.variable.id = "mathvar" + value;
+
+        this.variable.classList.add("knowsWants");
+        this.wantsElement.appendChild(this.variable);
+        var mathContainer = equationJSON.createMathML(this.variable);
         equationJSON.FormatItem(value, mathContainer);
         
         MathJax.typesetPromise()

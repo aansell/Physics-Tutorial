@@ -1,18 +1,16 @@
 import { equationJSON } from "./Owen/EquationToHTML.js";
-import { Draggable } from "./DropBoxes.js"
+import { dropBoxDiv, Draggable } from "./DropBoxes.js"
 import { problemsJSON } from "./ProblemToHTML.js";
 
 export class equationDiv {
   divOne;
-  variable;
+  box;
 
   equations;
 
   constructor(parent, headerText) {
-    this.variable = document.createElement("div");
-    this.variable.id = "equationBox";
-    parent.appendChild(this.variable);
-    this.addHeader(headerText);
+    this.box = new dropBoxDiv(parent, headerText);
+    this.box.addDraggableClass("draggableEquations");
 
     this.addAllEquations();
   }
@@ -29,22 +27,22 @@ export class equationDiv {
 
   createEquation(iteration){
     
-    this.divOne = new Draggable("equation" + iteration.toString(), this.variable, "divOne");
+    this.divOne = new Draggable("equation" + iteration.toString(), this.box.htmlElement, ["divOne", "draggableEquations"]);
     
-
-    this.equations.addToHTML(iteration, this.divOne.container);
+    this.equations.addToHTML(iteration, this.divOne.htmlElement);
   }
 
   addHeader(text) {
     const header = document.createElement("h3");
     header.textContent = text;
-    this.variable.appendChild(header);
+    this.box.htmlElement.appendChild(header);
   }
 }
 
-function createDropBox() {
+function createDropBoxes() {
   var parentDiv = document.getElementById("panel-content");
   var parentBoxDiv = document.getElementById("main-content");
+  new dropBoxDiv(parentBoxDiv, "Equations", "draggableEquations", true);
   new equationDiv(parentDiv, "Equations");
   new problemsJSON(parentDiv);
 }
@@ -68,4 +66,4 @@ function togglePanel() {
   }
 }
   
-createDropBox();
+createDropBoxes();

@@ -2,22 +2,35 @@ import { AllDropdowns } from "./Dropdowns.js";
 import { dropBoxDiv } from "./DropBoxes.js";
 
 
-function createDropElements() {
-    var maincontent = document.getElementById("main-content");
-    var dropdowns = new AllDropdowns(maincontent);
+export class MainContent {
+    dropdowns;
+    equationBox;
 
-    var buttonText = "Variables";
-    var dropdownText = new Array("Δd", "Δt", "v");
+    constructor() {}
 
-    dropdowns.addDropdown(true, buttonText, dropdownText);
-    dropdowns.addDropdown(true, buttonText, dropdownText);
-    dropdowns.closeAll();
+    #createDropElements(parent) {
+        this.dropdowns = new AllDropdowns(parent);
+
+        var buttonText = "Variables";
+        var dropdownText = new Array("Δd", "Δt", "v");
+
+        this.dropdowns.addDropdown(true, buttonText, dropdownText);
+        this.dropdowns.addDropdown(true, buttonText, dropdownText);
+        this.dropdowns.closeAll();
+    }
+
+
+    createAllContent() {
+        var mainContent = document.getElementById("main-content");
+
+        this.equationBox = new dropBoxDiv(mainContent, "Equations", "draggableEquations", true);
+        this.#createDropElements(mainContent);
+    }
+
+    removeDropBoxes() {
+        if(this.dropdowns != null) {
+            this.dropdowns.delete();
+            this.dropdowns = null;
+        }
+    }
 }
-
-
-document.addEventListener("DOMContentLoaded", () => {
-    createDropElements();
-});
-
-var parentBoxDiv = document.getElementById("main-content");
-new dropBoxDiv(parentBoxDiv, "Equations", "draggableEquations", true);

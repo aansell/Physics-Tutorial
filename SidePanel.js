@@ -33,35 +33,62 @@ export class equationDiv {
   }
 
   addHeader(text) {
-    const header = document.createElement("h3");
+    var header = document.createElement("h3");
     header.textContent = text;
     this.box.htmlElement.appendChild(header);
   }
 }
 
-function createDropBoxes() {
-  var parentDiv = document.getElementById("panel-content");
-  new equationDiv(parentDiv, "Equations");
-  new problemsJSON(parentDiv);
-}
+export class SidePanel {
+  content;
 
+  constructor() {}
 
-document.getElementById("toggle-btn").addEventListener("click", togglePanel);
-
-function togglePanel() {
-  var panel = document.getElementById("side-panel"); 
-  var icon = document.getElementById("toggle-icon"); 
-  var toggleBtn = document.getElementById("toggle-btn"); 
-
-  panel.classList.toggle("open"); 
-
-  if (panel.classList.contains("open")) { 
-    icon.innerHTML = "arrow_back_ios"; 
-    toggleBtn.style.right = "81%"; 
-  } else { 
-    icon.innerHTML = "arrow_forward_ios"; 
-    toggleBtn.style.right = "97%"; 
+  #createDropBoxes() {
+    new equationDiv(this.content, "Equations");
+    new problemsJSON(this.content);
   }
+
+  #togglePanel() {
+    var panel = document.getElementById("side-panel"); 
+    var icon = document.getElementById("toggle-icon");
+    var toggleBtn = document.getElementById("toggle-btn"); 
+
+    panel.classList.toggle("open");
+
+    if (panel.classList.contains("open")) { 
+      icon.innerHTML = "arrow_back_ios"; 
+      toggleBtn.style.right = "81%"; 
+    } else {
+      icon.innerHTML = "arrow_forward_ios"; 
+      toggleBtn.style.right = "97%"; 
+    }
+  }
+
+  #createPanelAndButton(parent) {
+    var panel = document.createElement("div");
+    panel.id = "side-panel";
+    parent.appendChild(panel);
+    this.content = document.createElement("div");
+    this.content.id = "panel-content";
+    panel.appendChild(this.content);
+
+    var toggle = document.createElement("div");
+    toggle.id = "toggle-btn";
+    parent.appendChild(toggle);
+    var image = document.createElement("span");
+    image.id = "toggle-icon";
+    image.classList.add("material-symbols-outlined");
+    image.textContent = "arrow_forward_ios";
+    toggle.appendChild(image);
+  }
+    
+  createSidePanel() {
+    this.#createPanelAndButton(document.body);
+
+    document.getElementById("toggle-btn").addEventListener("click", this.#togglePanel);
+
+    this.#createDropBoxes();
+  }
+
 }
-  
-createDropBoxes();

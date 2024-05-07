@@ -74,6 +74,10 @@ export class Dropdown {
         this.list.style.display = "flex";
         this.arrow.textContent = "▲";
     }
+
+    delete() {
+        this.element.remove();
+    }
 }
 
 export class AllDropdowns {
@@ -115,6 +119,11 @@ export class AllDropdowns {
 
     closeAll() {
         this.dropdowns.forEach((drop) => { drop.close() });
+    }
+
+    delete() {
+        this.knowsParent.remove();
+        this.wantsParent.remove();
     }
 }
 

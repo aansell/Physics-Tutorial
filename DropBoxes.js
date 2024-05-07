@@ -39,7 +39,6 @@ export class dropBoxDiv {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("currentlyDragging");
     var draggedElement = document.getElementById(data);
-    // ev.target.parentNode.insertBefore(draggedElement, ev.target.nextSibling);
     if(draggedElement instanceof HTMLDivElement) {
       var removeFromParent = true;
       if(typeof ev.target.hasChild == 'undefined') {
@@ -112,5 +111,3 @@ export class Draggable {
     ev.dataTransfer.setData("currentlyDragging", ev.target.id);
   }
 }
-
-

@@ -1,3 +1,4 @@
+/*
 // finds all the dropdowns when the page loads
 const dropdowns = document.querySelectorAll(".dropdown_calvin");
 

@@ -41,8 +41,6 @@ export class equationDiv {
 
 function createDropBoxes() {
   var parentDiv = document.getElementById("panel-content");
-  var parentBoxDiv = document.getElementById("main-content");
-  new dropBoxDiv(parentBoxDiv, "Equations", "draggableEquations", true);
   new equationDiv(parentDiv, "Equations");
   new problemsJSON(parentDiv);
 }

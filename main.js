@@ -8,7 +8,7 @@ var mainContent = new MainContent;
 mainContent.createDropElements(document.getElementById("main-content"));
 
 var sidePanel;
-var nextButton = new Button(document.body, "Continue", "next-btn", () => {
+var nextButton = new Button(document.body, "Continue", "next-btn", (btn) => {
     mainContent.delete();
     mainContent.createEquationBox();
 
@@ -16,6 +16,8 @@ var nextButton = new Button(document.body, "Continue", "next-btn", () => {
         sidePanel.delete();
     }
     sidePanel = new SidePanel;
+
+    btn.delete();
 });
 
 /*

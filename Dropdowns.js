@@ -5,11 +5,21 @@ export class Dropdown {
     list;
     dropElements;
 
-    constructor(parent, buttonText, dropText, alldrops) {
+    constructor(alldrops, parent, buttonText, dropText, classes) {
 
         // Create dropdown div container
         this.element = document.createElement("div");
         this.element.className = "dropdown_calvin";
+
+        if(classes != undefined) {
+            if(classes instanceof Array) {
+                classes.forEach((item) => {
+                    this.element.classList.add(item);
+                });
+            } else {
+                this.element.classList.add(classes);
+            }
+        }
         parent.appendChild(this.element);
 
         // Create dropdown button
@@ -88,8 +98,10 @@ export class AllDropdowns {
     constructor(parent) {
         this.knowsParent = document.createElement("div");
         this.wantsParent = document.createElement("div");
+        this.knowsParent.classList.add("knows-wants-container");
+        this.wantsParent.classList.add("knows-wants-container");
         this.#addHeader("Knows", this.knowsParent);
-        this.#addHeader("wants", this.wantsParent);
+        this.#addHeader("Wants", this.wantsParent);
         parent.appendChild(this.knowsParent);
         parent.appendChild(this.wantsParent);
 
@@ -109,11 +121,11 @@ export class AllDropdowns {
     }
 
     // knows is true; wants is false
-    addDropdown(knowsOrWants, buttonText, dropdownText) {
+    addDropdown(knowsOrWants, buttonText, dropdownText, classes) {
         if(knowsOrWants) {
-            this.dropdowns.push(new Dropdown(this.knowsParent, buttonText, dropdownText, this));
+            this.dropdowns.push(new Dropdown(this, this.knowsParent, buttonText, dropdownText, classes));
         } else {
-            this.dropdowns.push(new Dropdown(this.wantsParent, buttonText, dropdownText, this));
+            this.dropdowns.push(new Dropdown(this, this.wantsParent, buttonText, dropdownText, classes));
         }
     }
 

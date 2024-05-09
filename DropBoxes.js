@@ -2,9 +2,9 @@ export class dropBoxDiv {
   htmlElement;
   allowedClasses;
 
-  constructor(parent, headerText, allowed = new Array, onlyOneDraggable = false) {
+  constructor(parent, id, headerText, allowed = new Array, onlyOneDraggable = false) {
     this.htmlElement = document.createElement("div");
-    this.htmlElement.id = "text-container";
+    this.htmlElement.id = id;
     this.htmlElement.className = "dropbox";
     parent.appendChild(this.htmlElement);
     this.addHeader(headerText);

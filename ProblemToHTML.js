@@ -7,8 +7,8 @@ export class problemsJSON{
     wantsBox;
 
     constructor(whereToPutIt) {
-        this.knowsBox = new dropBoxDiv(whereToPutIt, "Knows");
-        this.wantsBox = new dropBoxDiv(whereToPutIt, "Unknowns");
+        this.knowsBox = new dropBoxDiv(whereToPutIt, "text-container", "Knows");
+        this.wantsBox = new dropBoxDiv(whereToPutIt, "text-container", "Unknowns");
 
         var jsonProblems = fetch("./Owen/Problems.json").then(response => response.json());
         this.problems = jsonProblems.then((result) => {

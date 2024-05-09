@@ -23,7 +23,7 @@ export class MainContent {
     }
 
     createEquationBox() {
-        this.equationBox = new dropBoxDiv(this.mainContent, "Equations", "draggableEquations", true);
+        this.equationBox = new dropBoxDiv(this.mainContent, "mainEquationBox", "Equations", "draggableEquations", true);
     }
 
     createAllContent() {

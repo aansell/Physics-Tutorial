@@ -10,7 +10,7 @@ export class equationDiv {
   equations;
 
   constructor(parent, headerText) {
-    this.box = new dropBoxDiv(parent, headerText);
+    this.box = new dropBoxDiv(parent, "equationBox", headerText);
     this.box.addDraggableClass("draggableEquations");
 
     this.addAllEquations();
@@ -61,6 +61,7 @@ export class SidePanel {
     image.textContent = "arrow_forward_ios";
     
     this.toggleBtn = new Button(document.body, image, "toggle-btn", () => { SidePanel.togglePanel(this); });
+    this.toggleBtn.element.classList.add("closed");
 
     this.#createDropBoxes();
 
@@ -77,12 +78,15 @@ export class SidePanel {
     panel.element.classList.toggle("open");
     panel.element.classList.toggle("closed");
 
+    panel.toggleBtn.element.classList.toggle("open");
+    panel.toggleBtn.element.classList.toggle("closed");
+
     if (panel.element.classList.contains("open")) { 
       panel.toggleBtn.content.innerHTML = "arrow_back_ios"; 
-      panel.toggleBtn.element.style.right = "81%"; 
+      // panel.toggleBtn.element.style.left = "20%";
     } else {
       panel.toggleBtn.content.innerHTML = "arrow_forward_ios"; 
-      panel.toggleBtn.element.style.right = "97%";
+      // panel.toggleBtn.element.style.left = "0%";
     }
   }
 

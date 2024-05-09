@@ -81,6 +81,15 @@ export class dropBoxDiv {
   addDraggableClass(name) {
     this.allowedClasses.push(name);
   }
+
+  delete() {
+    if(this.htmlElement instanceof HTMLElement) {
+      this.htmlElement.remove();
+    }
+    
+    this.htmlElement = null;
+    this.allowedClasses = null;
+  }
 }
 
 export class Draggable {

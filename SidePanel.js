@@ -1,3 +1,4 @@
+import { Button } from "./Buttons.js";
 import { equationJSON } from "./Owen/EquationToHTML.js";
 import { dropBoxDiv, Draggable } from "./DropBoxes.js"
 import { problemsJSON } from "./ProblemToHTML.js";
@@ -40,55 +41,62 @@ export class equationDiv {
 }
 
 export class SidePanel {
+  element;
   content;
+  toggleBtn;
 
-  constructor() {}
+  constructor() {
+    this.element = document.createElement("div");
+    this.element.id = "side-panel";
+    this.element.classList.add("closed");
+    document.body.appendChild(this.element);
+    this.content = document.createElement("div");
+    this.content.id = "panel-content";
+    this.element.appendChild(this.content);
+
+
+    var image = document.createElement("span");
+    image.id = "toggle-icon";
+    image.classList.add("material-symbols-outlined");
+    image.textContent = "arrow_forward_ios";
+    
+    this.toggleBtn = new Button(document.body, image, "toggle-btn", () => { SidePanel.togglePanel(this); });
+
+    this.#createDropBoxes();
+
+  }
 
   #createDropBoxes() {
     new equationDiv(this.content, "Equations");
     new problemsJSON(this.content);
   }
 
-  #togglePanel() {
-    var panel = document.getElementById("side-panel"); 
-    var icon = document.getElementById("toggle-icon");
-    var toggleBtn = document.getElementById("toggle-btn"); 
+  static togglePanel(panel) {
+    console.log(panel);
 
-    panel.classList.toggle("open");
+    panel.element.classList.toggle("open");
+    panel.element.classList.toggle("closed");
 
-    if (panel.classList.contains("open")) { 
-      icon.innerHTML = "arrow_back_ios"; 
-      toggleBtn.style.right = "81%"; 
+    if (panel.element.classList.contains("open")) { 
+      panel.toggleBtn.content.innerHTML = "arrow_back_ios"; 
+      panel.toggleBtn.element.style.right = "81%"; 
     } else {
-      icon.innerHTML = "arrow_forward_ios"; 
-      toggleBtn.style.right = "97%"; 
+      panel.toggleBtn.content.innerHTML = "arrow_forward_ios"; 
+      panel.toggleBtn.element.style.right = "97%";
     }
   }
 
-  #createPanelAndButton(parent) {
-    var panel = document.createElement("div");
-    panel.id = "side-panel";
-    parent.appendChild(panel);
-    this.content = document.createElement("div");
-    this.content.id = "panel-content";
-    panel.appendChild(this.content);
+  delete() {
+    if(this.element instanceof HTMLElement) {
+      this.element.remove();
+    }
 
-    var toggle = document.createElement("div");
-    toggle.id = "toggle-btn";
-    parent.appendChild(toggle);
-    var image = document.createElement("span");
-    image.id = "toggle-icon";
-    image.classList.add("material-symbols-outlined");
-    image.textContent = "arrow_forward_ios";
-    toggle.appendChild(image);
+    if(this.toggleBtn instanceof Button) {
+      this.toggleBtn.delete();
+    }
+
+    this.element = null;
+    this.content = null;
+    this.toggleBtn = null;
   }
-    
-  createSidePanel() {
-    this.#createPanelAndButton(document.body);
-
-    document.getElementById("toggle-btn").addEventListener("click", this.#togglePanel);
-
-    this.#createDropBoxes();
-  }
-
 }

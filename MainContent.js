@@ -3,13 +3,16 @@ import { dropBoxDiv } from "./DropBoxes.js";
 
 
 export class MainContent {
+    mainContent;
     dropdowns;
     equationBox;
 
-    constructor() {}
+    constructor() {
+        this.mainContent = document.getElementById("main-content");
+    }
 
-    #createDropElements(parent) {
-        this.dropdowns = new AllDropdowns(parent);
+    createDropElements() {
+        this.dropdowns = new AllDropdowns(this.mainContent);
 
         var buttonText = "Variables";
         var dropdownText = new Array("Δd", "Δt", "v");
@@ -19,18 +22,24 @@ export class MainContent {
         this.dropdowns.closeAll();
     }
 
-
-    createAllContent() {
-        var mainContent = document.getElementById("main-content");
-
-        this.equationBox = new dropBoxDiv(mainContent, "Equations", "draggableEquations", true);
-        this.#createDropElements(mainContent);
+    createEquationBox() {
+        this.equationBox = new dropBoxDiv(this.mainContent, "Equations", "draggableEquations", true);
     }
 
-    removeDropBoxes() {
-        if(this.dropdowns != null) {
+    createAllContent() {
+        this.createEquationBox();
+        this.createDropElements();
+    }
+
+    delete() {
+        if(this.dropdowns instanceof AllDropdowns) {
             this.dropdowns.delete();
             this.dropdowns = null;
+        }
+
+        if(this.equationBox instanceof dropBoxDiv) {
+            this.equationBox.delete();
+            this.equationBox = null;
         }
     }
 }

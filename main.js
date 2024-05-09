@@ -1,17 +1,27 @@
+import { Button } from "./Buttons.js"
 import { MainContent } from "./MainContent.js";
 import { SidePanel } from "./SidePanel.js";
 
 
-var mainContent;
+
+var mainContent = new MainContent;
+mainContent.createDropElements(document.getElementById("main-content"));
+
 var sidePanel;
+var nextButton = new Button(document.body, "Continue", "next-btn", () => {
+    mainContent.delete();
+    mainContent.createEquationBox();
 
-document.addEventListener("DOMContentLoaded", () => {
-    mainContent = new MainContent;
-    mainContent.createAllContent();
-
+    if(sidePanel != undefined) {
+        sidePanel.delete();
+    }
     sidePanel = new SidePanel;
-    sidePanel.createSidePanel();
 });
+
+/*
+var sidePanel = new SidePanel;
+sidePanel.createSidePanel();
+*/
 
 /*
 document.addEventListener("click", () => {

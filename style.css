@@ -81,7 +81,7 @@ body {
     border: 1px solid green;
   }
   
-  /* Dropdown container */
+  /* Dropdown container 
   .dropdown {
     position: absolute;
     margin: 20px;
@@ -89,6 +89,7 @@ body {
     left: 1200px;
     display: inline-block;
   }
+  */
   
   /* Dropdown content (hidden by default) */
   .dropdown-content {
@@ -216,7 +217,7 @@ body {
   --dropdown-selected-color: #6bf;
 }
 
-.dropdown_calvin {
+.dropdown-container {
   position: relative;
   width: 8rem;
 }

@@ -17,8 +17,8 @@ export class MainContent {
         var buttonText = "Variables";
         var dropdownText = new Array("Δd", "Δt", "v");
 
-        this.dropdowns.addDropdown(true, buttonText, dropdownText);
-        this.dropdowns.addDropdown(true, buttonText, dropdownText);
+        this.dropdowns.addDropdownToKnows(buttonText, dropdownText);
+        this.dropdowns.addDropdownToWants(buttonText, dropdownText);
         this.dropdowns.closeAll();
     }
 

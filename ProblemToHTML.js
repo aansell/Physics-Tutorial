@@ -1,6 +1,30 @@
 import { dropBoxDiv, Draggable } from "./DropBoxes.js";
 import { equationJSON } from "./Owen/EquationToHTML.js";
 
+export class Problem {
+    text;
+    equation;
+    knows;
+    wants;
+
+    constructor(problemObject) {
+        this.text = problemObject.text;
+        this.equation = problemObject.equation;
+        this.knows = new Array;
+        this.wants = new Array;
+
+        for (var i = 0; i < problemObject.variables.length; i++) {
+            if(problemObject.variables[i].value != null){
+                var name = problemObject.variables[i].name;
+                this.knows.push(name);
+            } else {
+                var name = problemObject.variables[i].name;
+                this.wants.push(name);
+            }
+        }
+    } 
+}
+
 export class problemsJSON{
     problems;
     knowsBox;
@@ -27,40 +51,30 @@ export class problemsJSON{
     }
 }
 
-export class Problem {
-    text;
-    equation;
-    knows;
-    wants;
+
+export class ProblemsHTML {
+    problem;
     knowsElement;
     wantsElement;
     dragContainer;
     variable;
 
     constructor(problemObject, knowsContainer, wantsContainer) {
-        if(knowsContainer instanceof dropBoxDiv && wantsContainer instanceof dropBoxDiv) {
-            this.text = problemObject.text;        
-            this.equation = problemObject.equation;
-            this.knows = new Array;
-            this.wants = new Array;
+        if(problemObject instanceof Problem && knowsContainer instanceof dropBoxDiv && wantsContainer instanceof dropBoxDiv) {
+            this.problem = problemObject;
 
             knowsContainer.addDraggableClass("knows");
             this.knowsElement = knowsContainer.htmlElement;
             this.wantsElement = wantsContainer.htmlElement;
 
-            for (var i = 0; i < problemObject.variables.length; i++) {
-                if(problemObject.variables[i].value != null){
-                    var name = problemObject.variables[i].name;
-                    this.knows.push(name);
-                    this.populateKnows(name);
-                } else {
-                    var name = problemObject.variables[i].name;
-                    this.wants.push(name);
-                    this.populateWants(name);
-                }
-            }
+            this.problem.knows.forEach((item) => {
+                this.populateKnows(item);
+            });
+            this.problem.wants.forEach((item) => {
+                this.populateWants(item);
+            });
         } else {
-            throw Error("Knows container or wants container not of type dropBoxDiv.");
+            throw Error("Problem object not of type Problem OR Knows container or wants container not of type dropBoxDiv.");
         }
     }
 

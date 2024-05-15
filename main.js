@@ -3,9 +3,11 @@ import { MainContent } from "./MainContent.js";
 import { SidePanel } from "./SidePanel.js";
 
 
+var screen = document.getElementById("main-content");
+screen.style.width = document.body.offsetWidth;
 
 var mainContent = new MainContent;
-mainContent.createDropElements(document.getElementById("main-content"));
+mainContent.createDropElements();
 
 var sidePanel;
 var nextButton = new Button(document.body, "Continue", "next-btn", (btn) => {

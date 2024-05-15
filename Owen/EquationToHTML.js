@@ -1,4 +1,3 @@
-import { problemsJSON } from "../ProblemToHTML.js";
 import { Equation, Operation } from "./Equation.js";
 
 

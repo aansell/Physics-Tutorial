@@ -1,7 +1,7 @@
 import { Button } from "./Buttons.js";
 import { equationJSON } from "./Owen/EquationToHTML.js";
 import { dropBoxDiv, Draggable } from "./DropBoxes.js"
-import { problemsJSON } from "./ProblemToHTML.js";
+import { ProblemsHTML, ProblemsJSON } from "./ProblemToHTML.js";
 
 export class equationDiv {
   divOne;
@@ -20,7 +20,6 @@ export class equationDiv {
     this.equations = new equationJSON;
 
     const equationLength = await this.equations.size();
-    console.log(equationLength);
     for(var i = 0; i < equationLength; i++){
       this.createEquation(i);
     }
@@ -69,12 +68,14 @@ export class SidePanel {
 
   #createDropBoxes() {
     new equationDiv(this.content, "Equations");
-    new problemsJSON(this.content);
+
+    var problemInfo = new ProblemsJSON;
+    problemInfo.then((problems) => {
+      new ProblemsHTML(problems[0], this.content);
+    });
   }
 
   static togglePanel(panel) {
-    console.log(panel);
-
     panel.element.classList.toggle("open");
     panel.element.classList.toggle("closed");
 

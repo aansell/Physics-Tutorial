@@ -25,15 +25,10 @@ export class Problem {
     } 
 }
 
-export class problemsJSON{
+export class ProblemsJSON{
     problems;
-    knowsBox;
-    wantsBox;
 
-    constructor(whereToPutIt) {
-        this.knowsBox = new dropBoxDiv(whereToPutIt, "text-container", "Knows");
-        this.wantsBox = new dropBoxDiv(whereToPutIt, "text-container", "Unknowns");
-
+    constructor() {
         var jsonProblems = fetch("./Owen/Problems.json").then(response => response.json());
         this.problems = jsonProblems.then((result) => {
             var problems = new Array();
@@ -49,23 +44,28 @@ export class problemsJSON{
             return result.length;
         });
     }
+
+    then(func) {
+        this.problems.then((problems) => { func(problems); });
+    }
 }
 
 
 export class ProblemsHTML {
     problem;
-    knowsElement;
-    wantsElement;
+    knows;
+    wants;
     dragContainer;
     variable;
 
-    constructor(problemObject, knowsContainer, wantsContainer) {
-        if(problemObject instanceof Problem && knowsContainer instanceof dropBoxDiv && wantsContainer instanceof dropBoxDiv) {
+    constructor(problemObject, whereToPutIt) {
+        if(problemObject instanceof Problem) {
             this.problem = problemObject;
 
-            knowsContainer.addDraggableClass("knows");
-            this.knowsElement = knowsContainer.htmlElement;
-            this.wantsElement = wantsContainer.htmlElement;
+            this.knows = new dropBoxDiv(whereToPutIt, "text-container", "Knows");
+            this.knows.addDraggableClass("knows");
+
+            this.wants = new dropBoxDiv(whereToPutIt, "text-container", "Unknowns");
 
             this.problem.knows.forEach((item) => {
                 this.populateKnows(item);
@@ -73,18 +73,19 @@ export class ProblemsHTML {
             this.problem.wants.forEach((item) => {
                 this.populateWants(item);
             });
+
+            MathJax.typesetPromise()
+                .catch((err) => console.log('MathJax typesetting failed: ' + err));
         } else {
-            throw Error("Problem object not of type Problem OR Knows container or wants container not of type dropBoxDiv.");
+            throw Error("Problem object not of type Problem.");
         }
     }
 
     populateKnows(value) {
-        this.dragContainer = new Draggable("mathvar" + value, this.knowsElement, ["knowsWants", "knows"]);
+        this.dragContainer = new Draggable("mathvar" + value, this.knows.htmlElement, ["knowsWants", "knows"]);
         // Create MathML Element
         var mathContainer = equationJSON.createMathML(this.dragContainer.htmlElement);
         equationJSON.FormatItem(value, mathContainer);
-        MathJax.typesetPromise()
-            .catch((err) => console.log('MathJax typesetting failed: ' + err));
     }
 
     populateWants(value) {
@@ -92,11 +93,8 @@ export class ProblemsHTML {
         this.variable.id = "mathvar" + value;
 
         this.variable.classList.add("knowsWants");
-        this.wantsElement.appendChild(this.variable);
+        this.wants.htmlElement.appendChild(this.variable);
         var mathContainer = equationJSON.createMathML(this.variable);
         equationJSON.FormatItem(value, mathContainer);
-        
-        MathJax.typesetPromise()
-            .catch((err) => console.log('MathJax typesetting failed: ' + err));
     }
 }

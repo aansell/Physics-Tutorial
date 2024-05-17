@@ -1,3 +1,4 @@
+import { ProblemsJSON } from "./Problems.js";
 import { AllDropdowns } from "./Dropdowns.js";
 import { dropBoxDiv } from "./DropBoxes.js";
 
@@ -6,19 +7,26 @@ export class MainContent {
     mainContent;
     dropdowns;
     equationBox;
+    problem;
 
-    constructor() {
+    constructor(problemNum) {
         this.mainContent = document.getElementById("main-content");
+        var allProblems = new ProblemsJSON;
+        this.problem = allProblems.at(problemNum);
     }
 
-    createDropElements() {
+    async createDropElements() {
+        var problem = await this.problem;
+
+        console.log(problem);
+
         this.dropdowns = new AllDropdowns(this.mainContent);
 
-        var buttonText = "Variables";
-        var dropdownText = new Array("Δd", "Δt", "v");
+        // var buttonText = "Variables";
+        // var dropdownText = new Array("Δd", "Δt", "v");
 
-        this.dropdowns.addDropdownToKnows(buttonText, dropdownText);
-        this.dropdowns.addDropdownToWants(buttonText, dropdownText);
+        this.dropdowns.addToKnows(problem);
+        this.dropdowns.addToWants(problem);
         this.dropdowns.closeAll();
     }
 

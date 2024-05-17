@@ -1,7 +1,8 @@
 import { Button } from "./Buttons.js";
 import { equationJSON } from "./Owen/EquationToHTML.js";
 import { dropBoxDiv, Draggable } from "./DropBoxes.js"
-import { ProblemsHTML, ProblemsJSON } from "./ProblemToHTML.js";
+import { ProblemsJSON } from "./Problems.js";
+import { ProblemsHTML } from "./ProblemToSidePanel.js";
 
 export class equationDiv {
   divOne;

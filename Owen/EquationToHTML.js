@@ -27,6 +27,40 @@ export class equationJSON {
       });
     }
 
+    static FormatMathString(item) {
+        var inBrackets = false;
+        var underscore = false;
+        var contents = "";
+        [...item].forEach((char) => {
+            if(char == '}') {
+                inBrackets = false;
+            }
+
+            if(inBrackets) {
+                contents += char;
+            }
+
+            if(char == '{') {
+                inBrackets = true;
+            }
+
+            if(char == "_") {
+                underscore = true;
+            }
+        });
+
+        if(contents.toLowerCase() == "delta") {
+            item = item.replace('{' + contents + '}', "Δ");
+        }
+
+        if(underscore) {
+            item = item.replace('_', "<sub>");
+            item += "</sub>";
+        }
+
+        return item;
+    }
+
     static FormatItem(item, whereToPutIt) {
         if(item instanceof Operation) {
             this.#OperationToHTML(item, whereToPutIt);

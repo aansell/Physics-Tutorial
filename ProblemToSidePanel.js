@@ -1,55 +1,6 @@
+import { Problem } from "./Problems.js";
 import { dropBoxDiv, Draggable } from "./DropBoxes.js";
 import { equationJSON } from "./Owen/EquationToHTML.js";
-
-export class Problem {
-    text;
-    equation;
-    knows;
-    wants;
-
-    constructor(problemObject) {
-        this.text = problemObject.text;
-        this.equation = problemObject.equation;
-        this.knows = new Array;
-        this.wants = new Array;
-
-        for (var i = 0; i < problemObject.variables.length; i++) {
-            if(problemObject.variables[i].value != null){
-                var name = problemObject.variables[i].name;
-                this.knows.push(name);
-            } else {
-                var name = problemObject.variables[i].name;
-                this.wants.push(name);
-            }
-        }
-    } 
-}
-
-export class ProblemsJSON{
-    problems;
-
-    constructor() {
-        var jsonProblems = fetch("./Owen/Problems.json").then(response => response.json());
-        this.problems = jsonProblems.then((result) => {
-            var problems = new Array();
-            result.forEach(item => {
-                problems.push(new Problem(item, this.knowsBox, this.wantsBox));
-            });
-            return problems;
-        });
-    }
-  
-    async size() {
-        return this.problems.then((result) => {
-            return result.length;
-        });
-    }
-
-    then(func) {
-        this.problems.then((problems) => { func(problems); });
-    }
-}
-
 
 export class ProblemsHTML {
     problem;

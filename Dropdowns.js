@@ -1,3 +1,6 @@
+import { Problem } from "./Problems.js";
+import { equationJSON } from "./Owen/EquationToHTML.js";
+
 export class Dropdown {
     element;
     button;
@@ -50,6 +53,7 @@ export class Dropdown {
         this.element.appendChild(this.list);
         
         // Create dropdown elements
+        dropText.unshift("");
         this.dropElements = new Array();
         dropText.forEach((value) => {
             var el = document.createElement("button");
@@ -57,10 +61,17 @@ export class Dropdown {
             el.classList.add("dropdown-option");
             el.textContent = value;
 
-            el.addEventListener("click", () => {
-                text.textContent = el.textContent;
-                alldrops.closeAll();
-            });
+            if(value === "") {
+                el.addEventListener("click", () => {
+                    text.textContent = buttonText;
+                    alldrops.closeAll();
+                });
+            } else {
+                el.addEventListener("click", () => {
+                    text.textContent = el.textContent;
+                    alldrops.closeAll();
+                });
+            }
 
             this.list.appendChild(el);
             this.dropElements.push(el);
@@ -98,7 +109,8 @@ export class Dropdown {
 export class AllDropdowns {
     knowsParent;
     wantsParent;
-    dropdowns;
+    knowsDrops;
+    wantsDrops;
 
     constructor(parent) {
         this.knowsParent = document.createElement("div");
@@ -110,7 +122,8 @@ export class AllDropdowns {
         parent.appendChild(this.knowsParent);
         parent.appendChild(this.wantsParent);
 
-        this.dropdowns = new Array();
+        this.knowsDrops = new Array();
+        this.wantsDrops = new Array();
 
         document.addEventListener("click", (event) => {
             if (!event.target.matches(".dropdown")) {
@@ -125,17 +138,37 @@ export class AllDropdowns {
         parent.appendChild(header);
     }
 
-    // knows is true; wants is false
-    addDropdownToKnows(buttonText, dropdownText, classes) {
-        this.dropdowns.push(new Dropdown(this, this.knowsParent, buttonText, dropdownText, classes));
+    #addDropdownRow(problemObject, knowsOrWants) {
+        var names = new Array;
+        problemObject.variableNames.forEach((item) => {
+            names.push(equationJSON.FormatMathString(item));
+        });
+        if(knowsOrWants == true) {
+            this.knowsDrops.push(new Dropdown(this, this.knowsParent, "Variable Name", names, []));
+        } else {
+            this.wantsDrops.push(new Dropdown(this, this.wantsParent, "Variable Name", names, []));
+        }
     }
 
-    addDropdownToWants(buttonText, dropdownText, classes) {
-        this.dropdowns.push(new Dropdown(this, this.wantsParent, buttonText, dropdownText, classes));
+    addToKnows(problemObject) {
+        if(problemObject instanceof Problem) {
+            this.#addDropdownRow(problemObject, true);
+        } else {
+            throw Error("problemObject provided to addToKnows not of type Problem.");
+        }
+    }
+
+    addToWants(problemObject) {
+        if(problemObject instanceof Problem) {
+            this.#addDropdownRow(problemObject, false);
+        } else {
+            throw Error("problemObject provided to addToWants not of type Problem.");
+        }
     }
 
     closeAll() {
-        this.dropdowns.forEach((drop) => { drop.close() });
+        this.knowsDrops.forEach((drop) => { drop.close() });
+        this.wantsDrops.forEach((drop) => { drop.close() });
     }
 
     delete() {

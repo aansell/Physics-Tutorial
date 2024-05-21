@@ -1,5 +1,5 @@
 import { Problem } from "./Problems.js";
-import { equationJSON } from "./Owen/EquationToHTML.js";
+import { EquationHTML } from "./EquationToHTML.js";
 
 export class Dropdown {
     element;
@@ -141,7 +141,7 @@ export class AllDropdowns {
     #addDropdownRow(problemObject, knowsOrWants) {
         var names = new Array;
         problemObject.variableNames.forEach((item) => {
-            names.push(equationJSON.FormatMathString(item));
+            names.push(EquationHTML.FormatMathString(item));
         });
         if(knowsOrWants == true) {
             this.knowsDrops.push(new Dropdown(this, this.knowsParent, "Variable Name", names, []));

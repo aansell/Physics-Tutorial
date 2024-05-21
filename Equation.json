@@ -1,7 +1,6 @@
-
 [
     {
-        "operation": "=",
+        "name": "eq1",
         "content": [
             "v",
             {
@@ -14,7 +13,7 @@
         ]
     },
     {
-        "operation": "=",
+        "name": "eq2",
         "content": [
             "x",
             {

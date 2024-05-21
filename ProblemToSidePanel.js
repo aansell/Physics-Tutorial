@@ -1,6 +1,6 @@
 import { Problem } from "./Problems.js";
 import { dropBoxDiv, Draggable } from "./DropBoxes.js";
-import { equationJSON } from "./Owen/EquationToHTML.js";
+import { EquationHTML } from "./EquationToHTML.js";
 
 export class ProblemsHTML {
     problem;
@@ -35,8 +35,8 @@ export class ProblemsHTML {
     populateKnows(value) {
         this.dragContainer = new Draggable("mathvar" + value, this.knows.htmlElement, ["knowsWants", "knows"]);
         // Create MathML Element
-        var mathContainer = equationJSON.createMathML(this.dragContainer.htmlElement);
-        equationJSON.FormatItem(value, mathContainer);
+        var mathContainer = EquationHTML.createMathML(this.dragContainer.htmlElement);
+        EquationHTML.FormatItem(value, mathContainer);
     }
 
     populateWants(value) {
@@ -45,7 +45,7 @@ export class ProblemsHTML {
 
         this.variable.classList.add("knowsWants");
         this.wants.htmlElement.appendChild(this.variable);
-        var mathContainer = equationJSON.createMathML(this.variable);
-        equationJSON.FormatItem(value, mathContainer);
+        var mathContainer = EquationHTML.createMathML(this.variable);
+        EquationHTML.FormatItem(value, mathContainer);
     }
 }

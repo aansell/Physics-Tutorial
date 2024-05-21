@@ -3,6 +3,7 @@ import { Equation, Operation } from "./Equation.js";
 
 export class equationJSON {
     equations;
+    htmlEqs;
   
     constructor() {
       var jsonEquations = fetch("Equation.json").then(response => response.json());
@@ -13,6 +14,8 @@ export class equationJSON {
           })
         return equations;
       });
+
+      this.htmlEqs = new Array();
     }
   
     async size() {
@@ -23,8 +26,33 @@ export class equationJSON {
   
     async addToHTML(index, whereToPutIt) {
       this.equations.then((result) => {
-        this.#EquationToHTML(result[index], whereToPutIt);
+        this.htmlEqs.push(new EquationHTML(result[index], whereToPutIt));
       });
+    }
+}
+
+export class EquationHTML {
+    constructor(equation, parent) {
+        if(!(equation instanceof Equation)) throw Error("Variable of type Equaiton must be passed to parameter e of EquationToHTML().");
+    
+        /*
+        var mathContainer = document.createElementNS("http://www.w3.org/1998/Math/MathML", "math");
+        mathContainer.classList.add("equation");
+        parent.appendChild(mathContainer);
+        */
+        var mathContainer = EquationHTML.createMathML(parent);
+    
+        EquationHTML.FormatItem(equation.left, mathContainer);
+    
+        var operationOb = document.createElement("mo");
+        operationOb.textContent = "=";
+        mathContainer.appendChild(operationOb);
+    
+        EquationHTML.FormatItem(equation.right, mathContainer);
+
+
+        MathJax.typesetPromise()
+            .catch((err) => console.log('MathJax typesetting failed: ' + err));
     }
 
     static FormatMathString(item) {
@@ -192,31 +220,4 @@ export class equationJSON {
         return mathContainer;
     }
     
-    #EquationToHTML(equation, parent) {
-        if(!(equation instanceof Equation)) throw Error("Variable of type Equaiton must be passed to parameter e of EquationToHTML().");
-    
-        /*
-        var mathContainer = document.createElementNS("http://www.w3.org/1998/Math/MathML", "math");
-        mathContainer.classList.add("equation");
-        parent.appendChild(mathContainer);
-        */
-        var mathContainer = equationJSON.createMathML(parent);
-    
-        equationJSON.FormatItem(equation.left, mathContainer);
-    
-        var operationOb = document.createElement("mo");
-        operationOb.textContent = "=";
-        mathContainer.appendChild(operationOb);
-    
-        equationJSON.FormatItem(equation.right, mathContainer);
-
-
-        MathJax.typesetPromise()
-            .catch((err) => console.log('MathJax typesetting failed: ' + err));
-        /*
-        document.addEventListener("DOMContentLoaded", function() {
-            renderMathInElement(parent);
-        });
-        */
-    }
   }

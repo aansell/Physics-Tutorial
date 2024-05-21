@@ -32,7 +32,7 @@ export class ProblemsJSON{
     #problems;
 
     constructor() {
-        var jsonProblems = fetch("./Owen/Problems.json").then(response => response.json());
+        var jsonProblems = fetch("./Problems.json").then(response => response.json());
         this.#problems = jsonProblems.then((result) => {
             var problems = new Array();
             result.forEach(item => {

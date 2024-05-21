@@ -166,7 +166,7 @@ body {
     width: 300px; /* Width of the side panel */
     height: 100%; /* Full height of the viewport */
     background: #f0f0f0; /* Background color of the side panel */
-    transition: left 0.3s ease; /* Transition effect for opening and closing the panel */
+    transition: var(--sidepanel-transition); /* Transition effect for opening and closing the panel */
     z-index: 1000; /* Z-index to control the stacking order */
     overflow-y: auto; /* Add scrollbar when content exceeds height */
   }
@@ -180,7 +180,7 @@ body {
     top: 50%; /* Center vertically */
     transform: translateY(-50%); /* Center vertically */
     z-index: 1001; /* Higher z-index to appear on top of the panel */
-    transition: left 0.3s ease;
+    transition: var(--sidepanel-transition);
     cursor: pointer; /* Change cursor to pointer */
   }
 
@@ -217,6 +217,7 @@ body {
 :root {
   --dropdown-color: #ddd;
   --dropdown-selected-color: #6bf;
+  --sidepanel-transition: left 0.3s ease;
 }
 
 .dropdown-container {

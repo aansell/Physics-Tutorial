@@ -1,6 +1,7 @@
 export class dropBoxDiv {
   htmlElement;
   allowedClasses;
+  child;
 
   constructor(parent, id, headerText, allowed = new Array, onlyOneDraggable = false) {
     this.htmlElement = document.createElement("div");
@@ -20,10 +21,12 @@ export class dropBoxDiv {
       this.allowedClasses.push(allowed);
     }
 
-    this.htmlElement.allowed = this.allowedClasses;
-    if(onlyOneDraggable == true) {
-      this.htmlElement.hasChild = false;
+    if(onlyOneDraggable === true) {
+      this.child = null;
+    } else {
+      this.child = undefined;
     }
+    this.htmlElement.dropbox = this;
   }
   addHeader(text) {
     const header = document.createElement("h3");
@@ -40,41 +43,48 @@ export class dropBoxDiv {
     var data = ev.dataTransfer.getData("currentlyDragging");
     var draggedElement = document.getElementById(data);
     if(draggedElement instanceof HTMLDivElement) {
-      var removeFromParent = true;
-      if(typeof ev.target.hasChild == 'undefined') {
-        removeFromParent = false;
+      var box = ev.target;
+      if (typeof box.drag != 'undefined') { // Not working
+        box = ev.target.parentElement;
       }
 
-      if (typeof ev.target.allowed == 'undefined') {
+      if (typeof ev.target.dropbox == 'undefined') {
         return;
       }
+
+      var removeFromParent = true;
+      if(typeof draggedElement.parentElement.dropbox.child == 'undefined') {
+        removeFromParent = false;
+      }
       
-      if(typeof ev.target.hasChild == 'undefined') {
-        ev.target.allowed.forEach((name) => {
+      if(typeof box.dropbox.child == 'undefined') {
+        box.dropbox.allowedClasses.forEach((name) => {
           if(draggedElement.classList.contains(name)) {
             if(removeFromParent == true) {
-              draggedElement.parentElement.hasChild = false;
+              draggedElement.parentElement.child = null;
             }
-            ev.target.appendChild(draggedElement);
+
+            box.appendChild(draggedElement);
             return;
           }
         });
       } else {
-        if(ev.target.hasChild == false) {
-          ev.target.allowed.forEach((name) => {
-            if(draggedElement.classList.contains(name)) {
-              if(removeFromParent == true) {
-                draggedElement.parentElement.hasChild = false;
-              }
-              ev.target.appendChild(draggedElement);
-              ev.target.hasChild = true;
-              return;
+        box.dropbox.allowedClasses.forEach((name) => {
+          if(draggedElement.classList.contains(name)) {
+            if(box.dropbox.child !== null) {
+              box.dropbox.child.drag.returnHome();
             }
-          });
-        }
+
+            if(removeFromParent == true) {
+              draggedElement.parentElement.child = null;
+            }
+
+            box.appendChild(draggedElement);
+            box.dropbox.child = draggedElement;
+            return;
+          }
+        });
       }
-    } else {
-      throw Error("Couldn't find dragged element.");
     }
   }
 
@@ -94,8 +104,11 @@ export class dropBoxDiv {
 
 export class Draggable {
   htmlElement;
+  draggedClass;
+  #home;
 
   constructor(id, parent, classes) {
+    this.#home = parent;
 
     this.htmlElement = document.createElement("div");
     this.htmlElement.draggable = true;
@@ -112,8 +125,12 @@ export class Draggable {
     parent.appendChild(this.htmlElement);
 
     this.htmlElement.addEventListener("dragstart", this.#drag);
-    // this.htmlElement.addEventListener("dragover", this.#allowDrop);
-    // this.htmlElement.addEventListener("drop", this.#drop);
+    
+    this.htmlElement.drag = this;
+  }
+
+  returnHome() {
+    this.#home.appendChild(this.htmlElement);
   }
 
   #drag(ev) {

@@ -23,3 +23,13 @@ function getTextbyClicking() {
 }
 
 getTextbyClicking();
+
+/*
+CSS:
+
+.crossed-out {
+  text-decoration: line-through;
+  color: red;
+}
+
+*/

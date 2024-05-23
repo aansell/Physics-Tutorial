@@ -4,7 +4,7 @@ export class ProblemsJSON{
     constructor() {
         var jsonProblems = fetch("./JSON Files/Problems.json").then(response => response.json());
         this.#problems = jsonProblems.then((result) => {
-            var problems = new Array();
+            var problems = new Array;
             result.forEach(item => {
                 problems.push(new Problem(item, this.knowsBox, this.wantsBox));
             });

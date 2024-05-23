@@ -44,11 +44,11 @@ export class DropBox {
     var draggedElement = document.getElementById(data);
     if(draggedElement instanceof HTMLDivElement) {
       var box = ev.target;
-      if (typeof box.drag != 'undefined') { // Not working
+      if (typeof box.drag != 'undefined') {
         box = ev.target.parentElement;
       }
 
-      if (typeof ev.target.dropbox == 'undefined') {
+      if (typeof box.dropbox == 'undefined') {
         return;
       }
 

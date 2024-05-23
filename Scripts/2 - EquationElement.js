@@ -1,15 +1,10 @@
 import { Equation, Operation } from "./1 - EquationInfo.js";
-
+import { MathFormat } from "./1 - MathFormatting.js";
 
 export class EquationHTML {
     constructor(equation, parent) {
         if(!(equation instanceof Equation)) throw Error("Variable of type Equaiton must be passed to parameter e of EquationToHTML().");
-    
-        /*
-        var mathContainer = document.createElementNS("http://www.w3.org/1998/Math/MathML", "math");
-        mathContainer.classList.add("equation");
-        parent.appendChild(mathContainer);
-        */
+
         var mathContainer = EquationHTML.createMathML(parent);
     
         EquationHTML.FormatItem(equation.left, mathContainer);
@@ -25,86 +20,69 @@ export class EquationHTML {
             .catch((err) => console.log('MathJax typesetting failed: ' + err));
     }
 
-    static FormatMathString(item) {
-        var inBrackets = false;
-        var underscore = false;
-        var contents = "";
-        [...item].forEach((char) => {
-            if(char == '}') {
-                inBrackets = false;
-            }
+    static createMathML(whereToPutIt) {
+        var mathContainer = document.createElementNS("http://www.w3.org/1998/Math/MathML", "math");
+        mathContainer.classList.add("equation");
+        whereToPutIt.appendChild(mathContainer);
 
-            if(inBrackets) {
-                contents += char;
-            }
-
-            if(char == '{') {
-                inBrackets = true;
-            }
-
-            if(char == "_") {
-                underscore = true;
-            }
-        });
-
-        if(contents.toLowerCase() == "delta") {
-            item = item.replace('{' + contents + '}', "Δ");
-        }
-
-        if(underscore) {
-            item = item.replace('_', "<sub>");
-            item += "</sub>";
-        }
-
-        return item;
+        return mathContainer;
     }
 
     static FormatItem(item, whereToPutIt) {
-        if(item instanceof Operation) {
-            this.#OperationToHTML(item, whereToPutIt);
-        } else if(typeof(item) == "string") {
-            var inBrackets = false;
-            var underscore = false;
-            var contents = "";
-            [...item].forEach((char) => {
-                if(char == '}') {
-                    inBrackets = false;
+        if(whereToPutIt instanceof Node) {
+            if(item instanceof Operation) {
+                this.#OperationToHTML(item, whereToPutIt);
+            } else if(typeof(item) == "string") {
+                /*
+                var inBrackets = false;
+                var underscore = false;
+                var contents = "";
+                [...item].forEach((char) => {
+                    if(char == '}') {
+                        inBrackets = false;
+                    }
+        
+                    if(inBrackets) {
+                        contents += char;
+                    }
+        
+                    if(char == '{') {
+                        inBrackets = true;
+                    }
+        
+                    if(char == "_") {
+                        underscore = true;
+                    }
+                });
+        
+                if(contents.toLowerCase() == "delta") {
+                    item = item.replace('{' + contents + '}', "Δ");
                 }
-    
-                if(inBrackets) {
-                    contents += char;
+        
+                if(underscore) {
+                    var subscript = document.createElement("msub");
+                    whereToPutIt.appendChild(subscript);
+                    item = item.split("_");
+                    this.FormatItem(item[0], subscript);
+                    this.FormatItem(item[1], subscript);
+                } else {
+                    var variableName = document.createElement("mi");
+                    variableName.textContent = item;
+                    whereToPutIt.appendChild(variableName);
                 }
-    
-                if(char == '{') {
-                    inBrackets = true;
-                }
-    
-                if(char == "_") {
-                    underscore = true;
-                }
-            });
-    
-            if(contents.toLowerCase() == "delta") {
-                item = item.replace('{' + contents + '}', "Δ");
-            }
-    
-            if(underscore) {
-                var subscript = document.createElement("msub");
-                whereToPutIt.appendChild(subscript);
-                item = item.split("_");
-                this.FormatItem(item[0], subscript);
-                this.FormatItem(item[1], subscript);
-            } else {
-                var variableName = document.createElement("mi");
+                */
+
+                var formattedString = MathFormat.FormatMathString(item, true);
+                whereToPutIt.insertAdjacentHTML("beforeend", formattedString);
+            } else if(typeof(item) == "number") {
+                var variableName = document.createElement("mn");
                 variableName.textContent = item;
                 whereToPutIt.appendChild(variableName);
+            } else {
+                throw Error("Unrecognized type of item.");
             }
-        } else if(typeof(item) == "number") {
-            var variableName = document.createElement("mn");
-            variableName.textContent = item;
-            whereToPutIt.appendChild(variableName);
         } else {
-            throw Error("Unrecognized type of item.");
+            throw Error("WhereToPutIt is not an htmlElement");
         }
     }
     
@@ -179,15 +157,6 @@ export class EquationHTML {
             }
     
             this.FormatItem(item, whereToPutIt);
-        })
-    }
-
-    static createMathML(whereToPutIt) {
-        var mathContainer = document.createElementNS("http://www.w3.org/1998/Math/MathML", "math");
-        mathContainer.classList.add("equation");
-        whereToPutIt.appendChild(mathContainer);
-
-        return mathContainer;
-    }
-    
-  }
+        });
+    } 
+}

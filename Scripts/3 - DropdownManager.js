@@ -1,5 +1,5 @@
 import { Problem } from "./1 - ProblemInfo.js";
-import { EquationHTML } from "./2 - EquationElement.js";
+import { MathFormat } from "./1 - MathFormatting.js";
 import { Dropdown } from "./2 - Dropdowns.js";
 
 export class AllDropdowns {
@@ -37,7 +37,7 @@ export class AllDropdowns {
     #addDropdownRow(problemObject, knowsOrWants) {
         var names = new Array;
         problemObject.variableNames.forEach((item) => {
-            names.push(EquationHTML.FormatMathString(item));
+            names.push(MathFormat.FormatMathString(item));
         });
         if(knowsOrWants == true) {
             this.knowsDrops.push(new Dropdown(this, this.knowsParent, "Variable Name", names, []));

@@ -1,4 +1,5 @@
 import { Problem } from "./1 - ProblemInfo.js";
+import { MathFormat } from "./1 - MathFormatting.js";
 import { DropBox, Draggable } from "./2 - DropBoxes.js";
 import { EquationHTML } from "./2 - EquationElement.js";
 
@@ -36,7 +37,8 @@ export class ProblemsHTML {
         this.dragContainer = new Draggable("mathvar" + value, this.knows.htmlElement, ["knowsWants", "knows"]);
         // Create MathML Element
         var mathContainer = EquationHTML.createMathML(this.dragContainer.htmlElement);
-        EquationHTML.FormatItem(value, mathContainer);
+
+        MathFormat.FormatMathString(value, mathContainer);
     }
 
     populateWants(value) {
@@ -46,6 +48,6 @@ export class ProblemsHTML {
         this.variable.classList.add("knowsWants");
         this.wants.htmlElement.appendChild(this.variable);
         var mathContainer = EquationHTML.createMathML(this.variable);
-        EquationHTML.FormatItem(value, mathContainer);
+        MathFormat.FormatMathString(value, mathContainer);
     }
 }

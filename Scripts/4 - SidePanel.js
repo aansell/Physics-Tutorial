@@ -56,7 +56,7 @@ export class SidePanel {
   }
 
   delete() {
-    if(this.element instanceof HTMLElement) {
+    if(this.element instanceof Node) {
       this.element.remove();
     }
 

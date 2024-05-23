@@ -1,4 +1,4 @@
-export class dropBoxDiv {
+export class DropBox {
   htmlElement;
   allowedClasses;
   child;

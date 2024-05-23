@@ -1,6 +1,6 @@
-import { Problem } from "./Problems.js";
-import { dropBoxDiv, Draggable } from "./DropBoxes.js";
-import { EquationHTML } from "./EquationToHTML.js";
+import { Problem } from "./1 - ProblemInfo.js";
+import { DropBox, Draggable } from "./2 - DropBoxes.js";
+import { EquationHTML } from "./2 - EquationElement.js";
 
 export class ProblemsHTML {
     problem;
@@ -13,10 +13,10 @@ export class ProblemsHTML {
         if(problemObject instanceof Problem) {
             this.problem = problemObject;
 
-            this.knows = new dropBoxDiv(whereToPutIt, "text-container", "Knows");
+            this.knows = new DropBox(whereToPutIt, "text-container", "Knows");
             this.knows.addDraggableClass("knows");
 
-            this.wants = new dropBoxDiv(whereToPutIt, "text-container", "Unknowns");
+            this.wants = new DropBox(whereToPutIt, "text-container", "Unknowns");
 
             this.problem.knows.forEach((item) => {
                 this.populateKnows(item);

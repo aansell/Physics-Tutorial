@@ -1,6 +1,6 @@
-import { Button } from "./Scripts/Buttons.js"
-import { MainContent } from "./Scripts/MainContent.js";
-import { SidePanel } from "./Scripts/SidePanel.js";
+import { Button } from "./Scripts/2 - Buttons.js"
+import { MainContent } from "./Scripts/4 - MainContent.js";
+import { SidePanel } from "./Scripts/4 - SidePanel.js";
 
 
 var screen = document.getElementById("main-content");

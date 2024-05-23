@@ -1,35 +1,5 @@
-import { Equation, Operation } from "./Equation.js";
+import { Equation, Operation } from "./1 - EquationInfo.js";
 
-
-export class equationJSON {
-    equations;
-    htmlEqs;
-  
-    constructor() {
-      var jsonEquations = fetch("./JSON Files/Equation.json").then(response => response.json());
-      this.equations = jsonEquations.then((result) => {
-        var equations = new Array();
-          result.forEach(item => {
-              equations.push(new Equation(item));
-          })
-        return equations;
-      });
-
-      this.htmlEqs = new Array();
-    }
-  
-    async size() {
-      return this.equations.then((result) => {
-        return result.length;
-      });
-    }
-  
-    async addToHTML(index, whereToPutIt) {
-      this.equations.then((result) => {
-        this.htmlEqs.push(new EquationHTML(result[index], whereToPutIt));
-      });
-    }
-}
 
 export class EquationHTML {
     constructor(equation, parent) {

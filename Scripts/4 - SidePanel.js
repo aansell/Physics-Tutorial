@@ -1,44 +1,7 @@
-import { Button } from "./Buttons.js";
-import { equationJSON } from "./EquationToHTML.js";
-import { dropBoxDiv, Draggable } from "./DropBoxes.js"
-import { ProblemsJSON } from "./Problems.js";
-import { ProblemsHTML } from "./ProblemToSidePanel.js";
-
-export class equationDiv {
-  divOne;
-  box;
-
-  equations;
-
-  constructor(parent, headerText) {
-    this.box = new dropBoxDiv(parent, "equationBox", headerText);
-    this.box.addDraggableClass("draggableEquations");
-
-    this.addAllEquations();
-  }
-
-  async addAllEquations() {
-    this.equations = new equationJSON;
-
-    const equationLength = await this.equations.size();
-    for(var i = 0; i < equationLength; i++){
-      this.createEquation(i);
-    }
-  }
-
-  createEquation(iteration){
-    
-    this.divOne = new Draggable("equation" + iteration.toString(), this.box.htmlElement, ["divOne", "draggableEquations"]);
-    
-    this.equations.addToHTML(iteration, this.divOne.htmlElement);
-  }
-
-  addHeader(text) {
-    var header = document.createElement("h3");
-    header.textContent = text;
-    this.box.htmlElement.appendChild(header);
-  }
-}
+import { Button } from "./2 - Buttons.js";
+import { ProblemsJSON } from "./1 - ProblemInfo.js";
+import { ProblemsHTML } from "./3 - ProblemVariables.js";
+import { EquationDiv } from "./3 - EquationManager.js";
 
 export class SidePanel {
   element;
@@ -68,7 +31,7 @@ export class SidePanel {
   }
 
   #createDropBoxes() {
-    new equationDiv(this.content, "Equations");
+    new EquationDiv(this.content, "Equations");
 
     var problemInfo = new ProblemsJSON;
     problemInfo.then((problems) => {

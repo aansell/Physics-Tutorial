@@ -1,6 +1,6 @@
-import { ProblemsJSON } from "./Problems.js";
-import { AllDropdowns } from "./Dropdowns.js";
-import { dropBoxDiv } from "./DropBoxes.js";
+import { ProblemsJSON } from "./1 - ProblemInfo.js";
+import { AllDropdowns } from "./3 - DropdownManager.js";
+import { DropBox } from "./2 - DropBoxes.js";
 
 
 export class MainContent {
@@ -31,7 +31,7 @@ export class MainContent {
     }
 
     createEquationBox() {
-        this.equationBox = new dropBoxDiv(this.mainContent, "mainEquationBox", "Equations", "draggableEquations", true);
+        this.equationBox = new DropBox(this.mainContent, "mainEquationBox", "Equations", "draggableEquations", true);
     }
 
     createAllContent() {
@@ -45,7 +45,7 @@ export class MainContent {
             this.dropdowns = null;
         }
 
-        if(this.equationBox instanceof dropBoxDiv) {
+        if(this.equationBox instanceof DropBox) {
             this.equationBox.delete();
             this.equationBox = null;
         }

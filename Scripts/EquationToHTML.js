@@ -6,7 +6,7 @@ export class equationJSON {
     htmlEqs;
   
     constructor() {
-      var jsonEquations = fetch("Equation.json").then(response => response.json());
+      var jsonEquations = fetch("./JSON Files/Equation.json").then(response => response.json());
       this.equations = jsonEquations.then((result) => {
         var equations = new Array();
           result.forEach(item => {

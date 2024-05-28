@@ -38,7 +38,9 @@ export class ProblemsHTML {
         // Create MathML Element
         var mathContainer = EquationHTML.createMathML(this.dragContainer.htmlElement);
 
-        MathFormat.FormatMathString(value, mathContainer);
+        var variableText = MathFormat.FormatMathString(value, true);
+        mathContainer.innerHTML = variableText;
+
     }
 
     populateWants(value) {
@@ -48,6 +50,8 @@ export class ProblemsHTML {
         this.variable.classList.add("knowsWants");
         this.wants.htmlElement.appendChild(this.variable);
         var mathContainer = EquationHTML.createMathML(this.variable);
-        MathFormat.FormatMathString(value, mathContainer);
+        
+        var variableText = MathFormat.FormatMathString(value, true);
+        mathContainer.innerHTML = variableText;
     }
 }

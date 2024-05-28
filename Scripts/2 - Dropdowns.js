@@ -3,9 +3,14 @@ export class Dropdown {
     button;
     arrow;
     list;
+    text;
     dropElements;
 
+    rowIndex;
+    #currentSelection;
+
     constructor(alldrops, parent, buttonText, dropText, classes) {
+        this.#currentSelection = -1;
 
         // Create dropdown div container
         this.element = document.createElement("div");
@@ -30,11 +35,11 @@ export class Dropdown {
         this.element.appendChild(this.button);
 
         // Create button text
-        var text = document.createElement("p");
-        text.classList.add("dropdown");
-        text.classList.add("dropdown-button-text");
-        text.textContent = buttonText;
-        this.button.appendChild(text);
+        this.text = document.createElement("p");
+        this.text.classList.add("dropdown");
+        this.text.classList.add("dropdown-button-text");
+        this.text.textContent = buttonText;
+        this.button.appendChild(this.text);
 
         // Create dropdown arrow
         this.arrow = document.createElement("p");
@@ -52,20 +57,23 @@ export class Dropdown {
         // Create dropdown elements
         dropText.unshift("");
         this.dropElements = new Array();
-        dropText.forEach((value) => {
+        dropText.forEach((value, index) => {
             var el = document.createElement("button");
             el.classList.add("dropdown");
             el.classList.add("dropdown-option");
-            el.textContent = value;
+            el.innerHTML = value;
+            el.dropdown = this;
 
             if(value === "") {
                 el.addEventListener("click", () => {
-                    text.textContent = buttonText;
+                    this.text.innerHTML = buttonText;
+                    this.#currentSelection = -1;
                     alldrops.closeAll();
                 });
             } else {
                 el.addEventListener("click", () => {
-                    text.textContent = el.textContent;
+                    this.text.innerHTML = el.innerHTML;
+                    this.#currentSelection = index - 1;
                     alldrops.closeAll();
                 });
             }
@@ -86,6 +94,10 @@ export class Dropdown {
                 this.open();
             }
         });
+    }
+
+    getCurrentIndex() {
+        return this.#currentSelection;
     }
 
     close() {

@@ -7,8 +7,11 @@ export class SidePanel {
   element;
   content;
   toggleBtn;
+  problem;
 
-  constructor() {
+  constructor(problem) {
+    this.problem = problem;
+
     this.element = document.createElement("div");
     this.element.id = "side-panel";
     this.element.classList.add("closed");
@@ -33,10 +36,7 @@ export class SidePanel {
   #createDropBoxes() {
     new EquationDiv(this.content, "Equations");
 
-    var problemInfo = new ProblemsJSON;
-    problemInfo.then((problems) => {
-      new ProblemsHTML(problems[0], this.content);
-    });
+    new ProblemsHTML(this.problem, this.content);
   }
 
   static togglePanel(panel) {

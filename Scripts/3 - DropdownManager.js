@@ -7,8 +7,13 @@ export class AllDropdowns {
     wantsParent;
     knowsDrops;
     wantsDrops;
+    knowsRows;
+    wantsRows;
 
     constructor(parent) {
+        this.knowsRows = 0;
+        this.wantsRows = 0;
+
         this.knowsParent = document.createElement("div");
         this.wantsParent = document.createElement("div");
         this.knowsParent.classList.add("knows-wants-container");
@@ -26,6 +31,21 @@ export class AllDropdowns {
                 this.closeAll();
             }
         });
+
+        document.addEventListener("click", (event) => {
+            if(event.target.matches(".dropdown-option") && event.target.innerHTML !== "" && event.target.dropdown.knowsOrWants != undefined) {
+                var drop = event.target.dropdown;
+                if(drop.knowsOrWants == true) {
+                    if(drop.rowIndex == this.knowsRows) {
+                        this.#addDropdownRow(drop.problem, true);
+                    }
+                } else {
+                    if(drop.rowIndex == this.wantsRows) {
+                        this.#addDropdownRow(drop.problem, false);
+                    }
+                }
+            }
+        });
     }
 
     #addHeader(text, parent) {
@@ -40,9 +60,20 @@ export class AllDropdowns {
             names.push(MathFormat.FormatMathString(item));
         });
         if(knowsOrWants == true) {
-            this.knowsDrops.push(new Dropdown(this, this.knowsParent, "Variable Name", names, []));
+            var drop = new Dropdown(this, this.knowsParent, "Variable Name", names, []);
+            this.knowsRows++;
+             // Javascript is wierd and allows you to make members of a class outisde of the constructor. Don't ask me why. But that's what's happening here. Basically you can reference this later with other stuff.
+            drop.knowsOrWants = true;
+            drop.rowIndex = this.knowsRows;
+            drop.problem = problemObject;
+            this.knowsDrops.push(drop);
         } else {
-            this.wantsDrops.push(new Dropdown(this, this.wantsParent, "Variable Name", names, []));
+            var drop = new Dropdown(this, this.wantsParent, "Variable Name", names, []);
+            this.wantsRows++;
+            drop.knowsOrWants = false;
+            drop.rowIndex = this.wantsRows;
+            drop.problem = problemObject;
+            this.wantsDrops.push(drop);
         }
     }
 

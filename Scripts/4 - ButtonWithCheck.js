@@ -2,6 +2,8 @@ import { Problem } from "./1 - ProblemInfo.js";
 import { Button } from "./2 - Buttons.js";
 import { AllDropdowns } from "./3 - DropdownManager.js";
 
+/* Eventually this will check whether the dropdowns + variable value text input are filled out correctly.
+Right now it's basicaly just a button. */
 export class CheckButtonKnowsWants {
     buttonElement;
     problem;
@@ -20,10 +22,15 @@ export class CheckButtonKnowsWants {
         }
     }
 
-    checkDropdownSelections() {
-        // Check condition
+    validateDropdowns() {
+        // This is where the code to check the dropdowns + text input would go
+        return true;
+    }
 
-        if(true) {
+    checkDropdownSelections() {
+        var correct = this.validateDropdowns();
+
+        if(correct) {
             this.functionToCall(this);
         }
     }

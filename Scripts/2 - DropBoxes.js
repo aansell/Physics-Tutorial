@@ -1,3 +1,5 @@
+/* Creates a dropbox that objects made with the Draggable class can be dropped into.
+It will only accept objects with a certain HTML class (sort of like unity tags). */
 export class DropBox {
   htmlElement;
   allowedClasses;
@@ -102,6 +104,8 @@ export class DropBox {
   }
 }
 
+
+/* Makes a container that is draggable, so then you can put other HTML elements into it for displaying and everything will drag. */
 export class Draggable {
   htmlElement;
   draggedClass;

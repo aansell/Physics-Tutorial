@@ -1,3 +1,4 @@
+/* Makes a dropdown, but you need it to be created thorugh the class AllDropdowns (3 - DropdownManager.js) for full funcitonality. */
 export class Dropdown {
     element;
     button;

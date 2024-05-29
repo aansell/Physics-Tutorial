@@ -1,3 +1,5 @@
+/* This class doesn't actually store any information, just contains static funciton(s) for
+converting strings into a more math-like or math-readable format. ex. Variable name (palin text) --> MathJax format */
 export class MathFormat {
     static FormatMathString(item, mathJaxFormat) {
         var inBrackets = false;

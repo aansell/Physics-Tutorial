@@ -2,6 +2,8 @@ import { AllDropdowns } from "./3 - DropdownManager.js";
 import { DropBox } from "./2 - DropBoxes.js";
 
 
+/* Creates all of the main content (not side panel / button) using lower level prefabs.
+Currently creates dropdowns on the first screen and main equation box on the second screen. */
 export class MainContent {
     mainContent;
     dropdowns;

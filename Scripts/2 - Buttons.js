@@ -1,3 +1,4 @@
+/* Makes a buton that calls specific function when clicked (passed to the constuctor). */
 export class Button {
     element;
     content;

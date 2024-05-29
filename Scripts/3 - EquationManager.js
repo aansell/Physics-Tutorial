@@ -3,7 +3,7 @@ import { EquationHTML } from "./2 - EquationElement.js";
 import { Draggable, DropBox } from "./2 - DropBoxes.js";
 
 
-
+/* Parses the Equation.json and puts all the equaitons into the equation bank. */
 export class EquationDiv {
   box;
 

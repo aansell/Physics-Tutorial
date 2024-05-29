@@ -1,8 +1,9 @@
 import { Button } from "./2 - Buttons.js";
-import { ProblemsJSON } from "./1 - ProblemInfo.js";
 import { ProblemsHTML } from "./3 - ProblemVariables.js";
 import { EquationDiv } from "./3 - EquationManager.js";
 
+
+/* Creates all the stuff in the side panel. Right now creates equation box and knows + wants boxes. */
 export class SidePanel {
   element;
   content;

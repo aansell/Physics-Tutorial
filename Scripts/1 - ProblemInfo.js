@@ -1,3 +1,5 @@
+/* Parses the Problems.json and puts the problems into an array of class Problem.
+Async functions are weird and you look into them before touching them. */
 export class ProblemsJSON{
     #problems;
 
@@ -27,6 +29,8 @@ export class ProblemsJSON{
     }
 }
 
+/* This just stores all the important information about the problem,
+like problem text (what acutally shows up on the screen), the variables in the problem, and their values + units. */
 export class Problem {
     text;
     equation;

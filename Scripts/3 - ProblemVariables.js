@@ -3,6 +3,7 @@ import { MathFormat } from "./1 - MathFormatting.js";
 import { DropBox, Draggable } from "./2 - DropBoxes.js";
 import { EquationHTML } from "./2 - EquationElement.js";
 
+/* It takes an inctance of class Problem and uses the variables stored there to populate the knows and wants boxes on the second screen. */
 export class ProblemsHTML {
     problem;
     knows;

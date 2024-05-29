@@ -1,19 +1,22 @@
 import { Equation, Operation } from "./1 - EquationInfo.js";
 import { MathFormat } from "./1 - MathFormatting.js";
 
+/* This one takes an instance of the Equation class, and puts it into the HTML with MathJax Format.  */
 export class EquationHTML {
+    mathContainer;
+
     constructor(equation, parent) {
         if(!(equation instanceof Equation)) throw Error("Variable of type Equaiton must be passed to parameter e of EquationToHTML().");
 
-        var mathContainer = EquationHTML.createMathML(parent);
+        this.mathContainer = EquationHTML.createMathML(parent);
     
-        EquationHTML.FormatItem(equation.left, mathContainer);
+        EquationHTML.FormatItem(equation.left, this.mathContainer);
     
         var operationOb = document.createElement("mo");
         operationOb.textContent = "=";
-        mathContainer.appendChild(operationOb);
+        this.mathContainer.appendChild(operationOb);
     
-        EquationHTML.FormatItem(equation.right, mathContainer);
+        EquationHTML.FormatItem(equation.right, this.mathContainer);
 
 
         MathJax.typesetPromise()
@@ -33,45 +36,6 @@ export class EquationHTML {
             if(item instanceof Operation) {
                 this.#OperationToHTML(item, whereToPutIt);
             } else if(typeof(item) == "string") {
-                /*
-                var inBrackets = false;
-                var underscore = false;
-                var contents = "";
-                [...item].forEach((char) => {
-                    if(char == '}') {
-                        inBrackets = false;
-                    }
-        
-                    if(inBrackets) {
-                        contents += char;
-                    }
-        
-                    if(char == '{') {
-                        inBrackets = true;
-                    }
-        
-                    if(char == "_") {
-                        underscore = true;
-                    }
-                });
-        
-                if(contents.toLowerCase() == "delta") {
-                    item = item.replace('{' + contents + '}', "Δ");
-                }
-        
-                if(underscore) {
-                    var subscript = document.createElement("msub");
-                    whereToPutIt.appendChild(subscript);
-                    item = item.split("_");
-                    this.FormatItem(item[0], subscript);
-                    this.FormatItem(item[1], subscript);
-                } else {
-                    var variableName = document.createElement("mi");
-                    variableName.textContent = item;
-                    whereToPutIt.appendChild(variableName);
-                }
-                */
-
                 var formattedString = MathFormat.FormatMathString(item, true);
                 whereToPutIt.insertAdjacentHTML("beforeend", formattedString);
             } else if(typeof(item) == "number") {
@@ -158,5 +122,9 @@ export class EquationHTML {
     
             this.FormatItem(item, whereToPutIt);
         });
-    } 
+    }
+
+    delete() {
+        this.mathContainer.remove();
+    }
 }

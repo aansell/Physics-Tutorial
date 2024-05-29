@@ -1,9 +1,10 @@
-import { ProblemsJSON, Problem } from "./Scripts/1 - ProblemInfo.js";
+import { ProblemsJSON } from "./Scripts/1 - ProblemInfo.js";
 import { CheckButtonKnowsWants } from "./Scripts/4 - ButtonWithCheck.js";
 import { MainContent } from "./Scripts/4 - MainContent.js";
 import { SidePanel } from "./Scripts/4 - SidePanel.js";
 
 
+/* All the code not in a class should be here. This is the script that actually runs the stuff (as opposed to defining what to run). */
 const problemNum = 0;
 
 
@@ -28,14 +29,3 @@ problem.then((prob) => {
     });
 });
 
-
-/*
-var sidePanel = new SidePanel;
-sidePanel.createSidePanel();
-*/
-
-/*
-document.addEventListener("click", () => {
-    mainContent.removeDropBoxes();
-});
-*/

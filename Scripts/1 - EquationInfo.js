@@ -1,3 +1,5 @@
+/* Parses the Equation.json and puts the equations into an array of class Equation.
+Async functions are weird and you look into them before touching them. */
 export class EquationJSON {
     #equations;
     htmlEqs;
@@ -30,6 +32,8 @@ export class EquationJSON {
     }
 }
 
+/* Storing an equation but it does it in a way that should be fairly easy to manipulate algebraicly.
+For example, instead of storing subtraction, it stores as addition of a negative number. */
 export class Equation {
     name;
     left;
@@ -64,6 +68,10 @@ export class Equation {
     }
 }
 
+/* This stores one specific operation of the equation, ex. addition, multiplaction.
+Contains the operation stored as a single character (+, *, ^), and
+an array of all the stuff that operation is being applied to ex. x + y + z --> operation = "+"; content = [x, y, z]
+Operations can also store other opterations in their array ex. x * (y + z) --> operation = "*"; content = [x, operation { operation = "+"; content = [y, z] } ] */
 export class Operation {
     operation;
     content;

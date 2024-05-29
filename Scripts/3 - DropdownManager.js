@@ -2,6 +2,8 @@ import { Problem } from "./1 - ProblemInfo.js";
 import { MathFormat } from "./1 - MathFormatting.js";
 import { Dropdown } from "./2 - Dropdowns.js";
 
+/* Managaes connected dropdown funcitonality, like closing all of the dropdowns when something is clicked.
+It also creates new dropdown rows when something is selected in the final row. */
 export class AllDropdowns {
     knowsParent;
     wantsParent;
@@ -54,7 +56,7 @@ export class AllDropdowns {
         parent.appendChild(header);
     }
 
-    #addDropdownRow(problemObject, knowsOrWants) {
+    #addDropdownRow(problemObject, knowsOrWants) { // At some point add code that creates the units dropdown here.
         var names = new Array;
         problemObject.variableNames.forEach((item) => {
             names.push(MathFormat.FormatMathString(item));
